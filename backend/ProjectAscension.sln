@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramBot.API", "src\TelegramBot.API\TelegramBot.API.csproj", "{012BDAF7-D9A1-43EB-811D-C57E0D9E15DC}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{928F7EE1-0F2E-4527-AD03-2F9F431C1E9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{012BDAF7-D9A1-43EB-811D-C57E0D9E15DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{012BDAF7-D9A1-43EB-811D-C57E0D9E15DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{012BDAF7-D9A1-43EB-811D-C57E0D9E15DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928F7EE1-0F2E-4527-AD03-2F9F431C1E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928F7EE1-0F2E-4527-AD03-2F9F431C1E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928F7EE1-0F2E-4527-AD03-2F9F431C1E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928F7EE1-0F2E-4527-AD03-2F9F431C1E9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
