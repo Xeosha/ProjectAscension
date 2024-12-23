@@ -6,7 +6,7 @@ using TelegramBot.API.Features;
 using TelegramBot.API.Options;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<TelegramBotBackroundService>();
+builder.Services.AddHostedService<TelegramBotBackroundService>();   
 
 builder.Services.Configure<TelegramOptions>(builder.Configuration.GetSection(TelegramOptions.Telegram));
 

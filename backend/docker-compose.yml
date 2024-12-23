@@ -1,5 +1,0 @@
-services:
-  telegrambot.api:
-    build:
-      context: .
-      dockerfile: src/TelegramBot.API/Dockerfile

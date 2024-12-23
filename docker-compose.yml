@@ -1,0 +1,6 @@
+services:
+  telegrambot.api:
+    image: ${DOCKER_REGISTRY-}telegrambotapi
+    build:
+      context: .
+      dockerfile: backend/src/TelegramBot.API/Dockerfile
