@@ -1,59 +1,14 @@
 import { Tabs } from "expo-router";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AnimatedTabBar } from '../../components/AnimatedTabBar';
+
+const TabArr = [
+  { route: 'avatar', label: 'Аватар', icon: 'account' },
+  { route: 'map', label: 'Карта', icon: 'map' },
+  { route: 'tower', label: 'Лобби', icon: 'castle' },
+  { route: 'shop', label: 'Магазин', icon: 'store' },
+  { route: 'guild', label: 'Гильдия', icon: 'shield-crown' },
+];
 
 export default function Layout() {
-  return (
-    <Tabs 
-      initialRouteName="avatar"
-      screenOptions={{
-        headerShown: false // Скрываем заголовок для всех табов
-      }}
-    >
-      <Tabs.Screen
-        name="avatar"
-        options={{
-          title: "Аватар",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="map"
-        options={{
-          title: "Карта",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="tower"
-        options={{
-          title: "Башня",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="castle" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="shop"
-        options={{
-          title: "Магазин",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="store" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="guild"
-        options={{
-          title: "Гильдия",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="shield-crown" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+  return <AnimatedTabBar tabs={TabArr} Tabs={Tabs} />;
 }

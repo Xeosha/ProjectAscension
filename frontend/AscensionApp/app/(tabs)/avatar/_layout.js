@@ -3,7 +3,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Pressable, StyleSheet } from 'react-native';
 
 export default function AvatarLayout() {
-
   const HeaderRight = () => (
     <View style={styles.headerButtons}>
       <Pressable 
@@ -21,7 +20,18 @@ export default function AvatarLayout() {
       </Pressable>
     </View>
   );
-  
+
+  // Список экранов
+  const screens = [
+    { name: "index", title: "Герои", icon: "home" },
+    { name: "health", title: "Здоровье", icon: "heart" },
+    { name: "achievements", title: "Достижения", icon: "trophy" },
+    { name: "settings", title: "Настройки", icon: "cog" },
+    { name: "support", title: "Поддержка", icon: "help-circle" },
+    { name: "language", title: "Настройки языка", icon: "translate" },
+    { name: "logout", title: "Выйти из аккаунта", icon: "logout" },
+  ];
+
   return (
     <Drawer
       screenOptions={{
@@ -33,72 +43,21 @@ export default function AvatarLayout() {
           backgroundColor: "#4a90e2",
         },
         headerTintColor: "#fff",
-        headerRight: HeaderRight,
+        headerRight: () => <HeaderRight />,
       }}
     >
-      <Drawer.Screen 
-        name="index" 
-        options={{ 
-          title: "Герои",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="health" 
-        options={{ 
-          title: "Здоровье",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="heart" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="achievements" 
-        options={{ 
-          title: "Достижения",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="trophy" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="settings" 
-        options={{ 
-          title: "Настройки",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cog" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="support" 
-        options={{ 
-          title: "Поддержка",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="help-circle" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="language" 
-        options={{ 
-          title: "Настройки языка",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="translate" size={size} color={color} />
-          ),
-        }} 
-      />
-      <Drawer.Screen 
-        name="logout" 
-        options={{ 
-          title: "Выйти из аккаунта",
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="logout" size={size} color={color} />
-          ),
-        }}
-      />
+      {screens.map(screen => (
+        <Drawer.Screen 
+          key={screen.name} // Уникальный ключ для каждого экрана
+          name={screen.name} 
+          options={{ 
+            title: screen.title,
+            drawerIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name={screen.icon} size={size} color={color} />
+            ),
+          }}
+        />
+      ))}
     </Drawer>
   );
 }
