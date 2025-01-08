@@ -2,10 +2,23 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LAYOUT, COLORS, TYPOGRAPHY } from '../constants/constants';
+import { COLORS, FONTS } from '../constants/constants';
+import { 
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp 
+} from 'react-native-responsive-screen';
 
-const animate1 = { 0: { scale: .5, translateY: 7 }, 0.92: { translateY: -34 }, 1: { scale: 1.2, translateY: -24 } };
-const animate2 = { 0: { scale: 1.2, translateY: -24 }, 1: { scale: 1, translateY: 7 } };
+
+const animate1 = { 
+  0: { scale: .5, translateY: 5}, 
+  0.92: { translateY: - hp('7%')/ 2 }, 
+  1: { scale: 1.2, translateY: - hp('7%') / 3 } 
+};
+
+const animate2 = { 
+  0: { scale: 1.2, translateY: - hp('7%') / 3}, 
+  1: { scale: 1, translateY: 7 } 
+};
 
 const circle1 = { 
   0: { scale: 0 }, 
@@ -52,7 +65,7 @@ const TabButton = (props) => {
             style={styles.circle} />
           <MaterialCommunityIcons 
             name={item.icon} 
-            size={LAYOUT.tabBar.iconSize} 
+            size={24} 
             color={focused ? COLORS.white : COLORS.primary} 
           />
         </View>
@@ -87,52 +100,51 @@ export function AnimatedTabBar({ tabs, Tabs }) {
     </Tabs>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: LAYOUT.tabBar.height,
   },
   tabBar: {
-    height: LAYOUT.tabBar.height,
+    height: hp('8%'),
     position: 'absolute',
-    margin: LAYOUT.tabBar.margin,
-    borderRadius: LAYOUT.tabBar.borderRadius,
-    backgroundColor: COLORS.background,
+    bottom: hp('1%'),
+    marginHorizontal: wp('36%') > 300 ? wp('36%') : 15,
+    borderRadius: 32,
+    backgroundColor: COLORS.surface,
     shadowColor: COLORS.black,
     shadowOffset: {
-      width: 0,
-      height: 2,
+      width: 2,
+      height: 4,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
   btn: {
-    width: LAYOUT.tabBar.buttonSize,
-    height: LAYOUT.tabBar.buttonSize,
-    borderRadius: LAYOUT.tabBar.borderRadius,
-    borderWidth: 1,
+    width: hp('5%'),
+    height: hp('5%'), 
+    borderRadius: hp('5%'),
     borderColor: COLORS.white,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.surface,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden', // Чтобы круг не выходил за пределы
   },
   circle: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: COLORS.primary,
-    borderRadius: LAYOUT.tabBar.borderRadius,
+    borderRadius: hp('5%'),
   },
   text: {
-    fontSize: TYPOGRAPHY.sizes.lg,
+    paddingTop: wp('0.35'),
+    fontSize: hp('1.25'),
     textAlign: 'center',
-    color: COLORS.text,
-    fontWeight: '500'
+    color: COLORS.white,
+    fontWeight: '500',
+    fontFamily: FONTS.regular,
   }
 });
 

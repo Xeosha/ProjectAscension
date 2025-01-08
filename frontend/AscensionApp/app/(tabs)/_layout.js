@@ -4,7 +4,7 @@ import { AnimatedTabBar } from '../../components/AnimatedTabBar';
 const TabArr = [
   { route: 'avatar', label: 'Аватар', icon: 'account' },
   { route: 'map', label: 'Карта', icon: 'map' },
-  { route: 'tower', label: 'Лобби', icon: 'castle' },
+  { route: 'tower', label: 'Башня', icon: 'castle' },
   { route: 'shop', label: 'Магазин', icon: 'store' },
   { route: 'guild', label: 'Гильдия', icon: 'shield-crown' },
 ];
