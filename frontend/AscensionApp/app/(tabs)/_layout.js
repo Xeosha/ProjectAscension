@@ -10,5 +10,7 @@ const TabArr = [
 ];
 
 export default function Layout() {
-  return <AnimatedTabBar tabs={TabArr} Tabs={Tabs} />;
+  return (
+      <AnimatedTabBar tabs={TabArr} Tabs={Tabs} />
+  );
 }

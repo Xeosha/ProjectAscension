@@ -1,12 +1,49 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Image } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
+import { COLORS } from '../../../constants/constants';
 
 export default function HeroScreen() {
   const [heroes, setHeroes] = useState([
-    { id: 0, name: "Hero 1", level: 15, hp: 150, mp: 15, image: require('./hero1.png'), position: 'left' },
-    { id: 1, name: "Hero 2", level: 17, hp: 170, mp: 17, image: require('./hero2.png'), position: 'center' },
-    { id: 2, name: "Hero 3", level: 12, hp: 120, mp: 12, image: require('./hero3.png'), position: 'right' },
+    { 
+      id: 0, 
+      name: "Hero 1", 
+      level: 15, 
+      hp: 150, 
+      mp: 15, 
+      powerLevel: 750,
+      damage: 65.5,
+      class: 'E',
+      exp: { current: 1250, max: 2000 },
+      image: require('./hero1.png'), 
+      position: 'left' 
+    },
+    { 
+      id: 1, 
+      name: "Hero 2", 
+      level: 17, 
+      hp: 170, 
+      mp: 17, 
+      powerLevel: 860,
+      damage: 75.0,
+      class: 'D',
+      exp: { current: 1800, max: 2500 },
+      image: require('./hero2.png'), 
+      position: 'center' 
+    },
+    { 
+      id: 2, 
+      name: "Hero 3", 
+      level: 12, 
+      hp: 120, 
+      mp: 12, 
+      powerLevel: 650,
+      damage: 55.5,
+      class: 'F',
+      exp: { current: 800, max: 1500 },
+      image: require('./hero3.png'), 
+      position: 'right' 
+    },
   ]);
 
   const rotateHeroesLeft = () => {
@@ -83,88 +120,101 @@ export default function HeroScreen() {
     }
   };
 
+  const getCurrentHero = () => heroes.find(hero => hero.position === 'center');
+
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <ScrollView>
-        <View style={styles.topSection}>
-          <View style={styles.jobSection}>
-            <Text style={styles.jobText}>Profession:</Text>
-            <Text style={styles.jobValue}>Warrior</Text>
+    <View style={styles.container}>
+      <View style={maxWidth=800}>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.topSection}>
+            <View style={styles.jobSection}>
+              <Text style={styles.jobText}>Profession:</Text>
+              <Text style={styles.jobValue}>Warrior</Text>
+            </View>
+            <Pressable style={styles.equipButton}>
+              <Text style={styles.equipButtonText}>Equip</Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.equipButton}>
-            <Text style={styles.equipButtonText}>Equip</Text>
-          </Pressable>
-        </View>
 
-        <PanGestureHandler onEnded={gestureHandler}>
-          <View style={styles.heroSection}>
-            <View style={styles.heroesContainer}>
-              {heroes.map((hero) => (
-                <View 
-                  key={hero.id} 
-                  style={[
-                    styles.hero,
-                    getHeroStyle(hero.position)
-                  ]}
-                >
-                  <Image source={hero.image} style={styles.heroImage} />
+          <GestureHandlerRootView>
+            <PanGestureHandler onEnded={gestureHandler}>
+              <View style={styles.heroSection}>
+                <View style={styles.heroesContainer}>
+                  {heroes.map((hero) => (
+                    <View 
+                      key={hero.id} 
+                      style={[
+                        styles.hero,
+                        getHeroStyle(hero.position)
+                      ]}
+                    >
+                      <Image source={hero.image} style={styles.heroImage} />
+                    </View>
+                  ))}
                 </View>
-              ))}
+
+                <View style={styles.equipmentContainer}>
+                  {equipmentSlots.map(slot => (
+                    <Pressable
+                      key={slot.id}
+                      style={[
+                        styles.equipmentSlot,
+                        { top: slot.top, [slot.left ? 'left' : 'right']: slot.left || slot.right }
+                      ]}
+                    >
+                      <Text style={styles.slotText}>+{'\n'}{slot.label}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
+            </PanGestureHandler>
+          </GestureHandlerRootView>
+
+          <View style={styles.statsSection}>
+            <View style={styles.statRow}>
+              <Text style={styles.statLabel}>Power LV:</Text>
+              <Text style={styles.statValue}>{getCurrentHero().powerLevel}</Text>
+            </View>
+            <View style={styles.statRow}>
+              <Text style={styles.statLabel}>Damage:</Text>
+              <Text style={styles.statValue}>{getCurrentHero().damage.toFixed(1)}</Text>
+            </View>
+            <View style={styles.statRow}>
+              <Text style={styles.statLabel}>Class:</Text>
+              <Text style={styles.statValue}>{getCurrentHero().class}</Text>
             </View>
 
-            <View style={styles.equipmentContainer}>
-              {equipmentSlots.map(slot => (
-                <Pressable
-                  key={slot.id}
-                  style={[
-                    styles.equipmentSlot,
-                    { top: slot.top, [slot.left ? 'left' : 'right']: slot.left || slot.right }
-                  ]}
-                >
-                  <Text style={styles.slotText}>+{'\n'}{slot.label}</Text>
-                </Pressable>
-              ))}
+            <View style={styles.expBar}>
+              <View style={[styles.expFill, { width: `${(getCurrentHero().exp.current / getCurrentHero().exp.max) * 100}%` }]} />
+              <Text style={styles.expText}>EXP: {getCurrentHero().exp.current}/{getCurrentHero().exp.max}</Text>
             </View>
-          </View>
-        </PanGestureHandler>
-
-        <View style={styles.statsSection}>
-          <View style={styles.statRow}>
-            <Text style={styles.statLabel}>Power LV:</Text>
-            <Text style={styles.statValue}>860</Text>
-          </View>
-          <View style={styles.statRow}>
-            <Text style={styles.statLabel}>Damage:</Text>
-            <Text style={styles.statValue}>75.0</Text>
-          </View>
-          <View style={styles.statRow}>
-            <Text style={styles.statLabel}>Class:</Text>
-            <Text style={styles.statValue}>D</Text>
-          </View>
-
-          <View style={styles.expBar}>
-            <View style={styles.expFill} />
-            <Text style={styles.expText}>EXP: 1250/2000</Text>
-          </View>
-          
-          <View style={styles.bars}>
-            <View style={styles.hpBar}>
-              <Text style={styles.barText}>HP: 170.0</Text>
+            
+            <View style={styles.bars}>
+              <View style={styles.hpBar}>
+                <Text style={styles.barText}>HP: {getCurrentHero().hp.toFixed(1)}</Text>
+              </View>
+              <View style={styles.mpBar}>
+                <Text style={styles.barText}>MP: {getCurrentHero().mp.toFixed(1)}</Text>
+              </View>
             </View>
-            <View style={styles.mpBar}>
-              <Text style={styles.barText}>MP: 17.0</Text>
-            </View>
+            
           </View>
-        </View>
-      </ScrollView>
-    </GestureHandlerRootView>
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: COLORS.energy,
+  },
+  scrollView: {
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 800,
+    backgroundColor: COLORS.black,
   },
   topSection: {
     flexDirection: 'row',
@@ -195,6 +245,9 @@ const styles = StyleSheet.create({
   heroSection: {
     height: 400,
     position: 'relative',
+    maxWidth: 600,
+    alignSelf: 'center',
+    width: '100%',
   },
   heroesContainer: {
     flex: 1,
