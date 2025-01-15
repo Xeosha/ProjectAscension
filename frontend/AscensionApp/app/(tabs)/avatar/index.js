@@ -11,6 +11,7 @@ import useResponsiveScreen from "../../../hooks/useResponsiveScreen";
 import { COLORS, FONTS, IMAGES } from "../../../constants/constants";
 import HeroCarousel from "../../../components/Hero/HeroCarusel";
 import JobCard from "../../../components/Hero/JobCard";
+import HeroCard from "../../../components/Hero/HeroCard";
 import { Emitter } from "react-native-particles";
 
 
@@ -29,8 +30,8 @@ const HeroScreen = () => {
 
   const heroes = [
     { id: 1, name: "Aragorn", profession: "Warrior", image: IMAGES.hero, lvl: 17, power: 1000 },
-    { id: 2, name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200 },
-    { id: 3, name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k" },
+    { id: 1, name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200 },
+    { id: 1, name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k" },
   ];
 
 
@@ -38,13 +39,13 @@ const HeroScreen = () => {
     <SafeAreaView style={styles.safeContainer}>
 
       <Emitter
-        numberOfParticles={1000}
+        numberOfParticles={10}
         emissionRate={1 }
-        interval={0}
+        interval={1}
         particleLife={4500}
         direction={360}
         spread={360}
-        speed={100}
+        speed={100} 
         gravity={2}
         fromPosition={() => ({ x: Math.random() * width, y: Math.random() * height })}
         infiniteLoop={true}
@@ -62,8 +63,7 @@ const HeroScreen = () => {
       <ScrollView style={[, {marginHorizontal:margin}]}>
         <Text style={styles.title}>Xeosha</Text>
         <JobCard hero={heroes[activeHero]} />
-        <HeroCarousel heroes={heroes} viewSize={viewSize} activeHero={activeHero} setActiveHero={setActiveHero}/>
-        
+        <HeroCarousel heroes={heroes} viewSize={viewSize} activeHero={activeHero} setActiveHero={setActiveHero}/>   
       </ScrollView>
     </SafeAreaView>
   );

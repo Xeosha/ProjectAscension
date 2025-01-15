@@ -6,7 +6,7 @@ import { Emitter } from 'react-native-particles';
 export default function Map() {
   return (
     <Emitter
-        numberOfParticles={50}
+        numberOfParticles={200}
         emissionRate={5}
         interval={200}
         particleLife={1500}
