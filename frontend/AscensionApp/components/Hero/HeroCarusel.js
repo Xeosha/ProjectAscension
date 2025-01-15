@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, PanResponder } from 'react-native';
 import { MotiView } from 'moti';
 import HeroCard from './HeroCard'; // Импортируем ваш компонент HeroCard
+import HeroCustomizationMenu from './HeroCustomizationMenu'; 
 
 const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
+
+  const [customizationVisible, setCustomizationVisible] = useState(false);
 
   const rotateCarousel = (direction) => {
     if (direction === 'left') {
@@ -57,7 +60,7 @@ const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
             >
               <TouchableOpacity
                 onPress={() =>
-                  isCentered && alert(`Selected Hero: ${hero.name}`)
+                  setCustomizationVisible(true)
                 }
               >
                 <HeroCard
@@ -75,6 +78,13 @@ const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
       <TouchableOpacity style={styles.arrowRight} onPress={() => rotateCarousel('right')}>
         <Text style={styles.arrowText}>→</Text>
       </TouchableOpacity>
+
+      <HeroCustomizationMenu
+        visible={customizationVisible}
+        onClose={() => setCustomizationVisible(false)}
+        hero={heroes[activeHero]}
+      />
+
     </View>
   );
 };
@@ -106,14 +116,14 @@ const styles = StyleSheet.create({
   },
   arrowLeft: {
     position: 'absolute',
-    left: 20,
+    left: -5,
     zIndex: 20,
     borderRadius: 20,
     padding: 10,
   },
   arrowRight: {
     position: 'absolute',
-    right: 20,
+    right: -5,
     zIndex: 20,
     borderRadius: 20,
     padding: 10,
