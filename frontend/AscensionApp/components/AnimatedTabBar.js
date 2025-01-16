@@ -1,49 +1,53 @@
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import * as Animatable from "react-native-animatable";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+} from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS, FONTS } from "../constants/constants";
 import useResponsiveScreen from "../hooks/useResponsiveScreen";
 
-const TabButton = (props) => {
-  const { item, onPress, accessibilityState } = props;
+const TabButton = ({ item, onPress, accessibilityState }) => {
   const focused = accessibilityState.selected;
-  const viewRef = useRef(null);
-  const circleRef = useRef(null);
-  const textRef = useRef(null);
-  const { wp, hp } = useResponsiveScreen();
+  const { hp } = useResponsiveScreen();
 
-  const animate1 = {
-    0: { scale: 0.5, translateY: 5 },
-    0.92: { translateY: -hp(7) / 2 },
-    1: { scale: 1.2, translateY: -hp(7) / 3 },
-  };
+  // Shared values for animations
+  const scale = useSharedValue(1);
+  const translateY = useSharedValue(0);
+  const circleScale = useSharedValue(0);
+  const textScale = useSharedValue(0);
 
-  const animate2 = {
-    0: { scale: 1.2, translateY: -hp(7) / 3 },
-    1: { scale: 1, translateY: 7 },
-  };
+  // Animated styles
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: scale.value },
+      { translateY: translateY.value },
+    ],
+  }));
 
-  const circle1 = {
-    0: { scale: 0 },
-    0.8: { scale: 1.2 },
-    1: { scale: 1 },
-  };
+  const circleStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: circleScale.value }],
+  }));
 
-  const circle2 = {
-    0: { scale: 1 },
-    1: { scale: 0 },
-  };
+  const textStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: textScale.value }],
+  }));
 
+  // Update animations on focus change
   useEffect(() => {
     if (focused) {
-      viewRef.current.animate(animate1);
-      circleRef.current.animate(circle1);
-      textRef.current.transitionTo({ scale: 1 });
+      scale.value = withSpring(1.2);
+      translateY.value = withSpring(-hp(7) / 3);
+      circleScale.value = withTiming(1, { duration: 300 });
+      textScale.value = withTiming(1, { duration: 300 });
     } else {
-      viewRef.current.animate(animate2);
-      circleRef.current.animate(circle2);
-      textRef.current.transitionTo({ scale: 0 });
+      scale.value = withSpring(1);
+      translateY.value = withSpring(7);
+      circleScale.value = withTiming(0, { duration: 300 });
+      textScale.value = withTiming(0, { duration: 300 });
     }
   }, [focused]);
 
@@ -53,11 +57,19 @@ const TabButton = (props) => {
       activeOpacity={1}
       style={styles.container}
     >
-      <Animatable.View ref={viewRef} duration={1000} style={styles.container}>
-        <View style={[styles.btn, { width: hp(5), height: hp(5), borderRadius: hp(5) }]}>
-          <Animatable.View
-            ref={circleRef}
-            style={[styles.circle, { borderRadius: hp(5) }]}
+      <Animated.View style={[styles.container, animatedStyle]}>
+        <View
+          style={[
+            styles.btn,
+            { width: hp(5), height: hp(5), borderRadius: hp(5) },
+          ]}
+        >
+          <Animated.View
+            style={[
+              styles.circle,
+              { borderRadius: hp(5) },
+              circleStyle,
+            ]}
           />
           <MaterialCommunityIcons
             name={item.icon}
@@ -65,10 +77,12 @@ const TabButton = (props) => {
             color={focused ? COLORS.white : COLORS.primary}
           />
         </View>
-        <Animatable.Text ref={textRef} style={[styles.text, { fontSize: hp(1) }]}>
+        <Animated.Text
+          style={[styles.text, { fontSize: hp(1) }, textStyle]}
+        >
           {item.label}
-        </Animatable.Text>
-      </Animatable.View>
+        </Animated.Text>
+      </Animated.View>
     </TouchableOpacity>
   );
 };

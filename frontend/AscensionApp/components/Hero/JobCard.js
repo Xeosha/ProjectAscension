@@ -14,7 +14,7 @@ const JobCard = ({ hero }) => {
   return (
     <View style={styles.topSection}>
       <Text style={styles.jobText}>Profession: {hero?.profession || "Unknown"}</Text>
-      <Pressable style={styles.equipButton} onPress={() => console.log(`Equipped ${hero?.name}`)}>
+      <Pressable style={styles.equipButton} onPress={() => alert(`Job: ${hero.profession}`)}>
         <Text style={styles.equipButtonText}>Equip</Text>
       </Pressable>
     </View>

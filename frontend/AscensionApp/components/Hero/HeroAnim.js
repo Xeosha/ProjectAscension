@@ -1,13 +1,14 @@
 import { View, Image, StyleSheet } from "react-native";
-import { IMAGES } from '../../constants/constants';
 
-const HeroAnim = () => {
+const HeroAnim = ( { equippedItems } ) => {
   return (
     <View style={styles.container}>
-      {/* Базовая анимация персонажа */}
-      <Image source={IMAGES.heroAnim} style={styles.baseImage} />
-      {/* Оружие поверх персонажа */}
-      <Image source={IMAGES.heroWeapon} style={styles.overlayImage} />
+      {equippedItems.baseImage && (
+        <Image source={equippedItems.baseImage} style={styles.overlayImage} />
+      )}
+      {equippedItems.weapon && (
+        <Image source={equippedItems.weapon} style={styles.overlayImage} />
+      )}
     </View>
   );
 };

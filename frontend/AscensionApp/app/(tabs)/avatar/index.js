@@ -11,28 +11,43 @@ import useResponsiveScreen from "../../../hooks/useResponsiveScreen";
 import { COLORS, FONTS, IMAGES } from "../../../constants/constants";
 import HeroCarousel from "../../../components/Hero/HeroCarusel";
 import JobCard from "../../../components/Hero/JobCard";
-import HeroCard from "../../../components/Hero/HeroCard";
 import { Emitter } from "react-native-particles";
 
 
 const HeroScreen = () => {
   const { wp, width, height } = useResponsiveScreen();
+
   const [margin, setMargin] = useState(1);
   const [viewSize, setViewSize] = useState(1);
+
   const [activeHero, setActiveHero] = useState(0);
 
   useEffect(() => {
-    // Пересчитываем margin и viewSize при изменении wp
     const newMargin = wp(32) > 400 ? wp(32) : 15;
     setMargin(newMargin);
     setViewSize(wp(100) - 2 * newMargin);
-  }, [wp]); // Этот useEffect будет срабатывать каждый раз при изменении wp
+  }, [wp]); 
 
-  const heroes = [
-    { id: 1, name: "Aragorn", profession: "Warrior", image: IMAGES.hero, lvl: 17, power: 1000 },
-    { id: 1, name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200 },
-    { id: 1, name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k" },
-  ];
+  const [heroes, setHeroes] = useState( [
+    { id: 1, name: "Aragorn", profession: "Warrior", image: IMAGES.hero, lvl: 17, power: 1000,
+      equippedItems: {
+        baseImage: IMAGES.heroAnim,
+        weapon: IMAGES.heroWeapon
+      },
+    },
+    { id: 1, name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200,
+      equippedItems: {
+        baseImage: IMAGES.heroAnim,
+        weapon: IMAGES.heroWeapon
+      },
+     },
+    { id: 1, name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k",
+      equippedItems: {
+        baseImage: IMAGES.heroAnim,
+        weapon: null,
+      },
+     },
+  ]);
 
 
   return (
@@ -60,11 +75,13 @@ const HeroScreen = () => {
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
       />
+
       <ScrollView style={[, {marginHorizontal:margin}]}>
         <Text style={styles.title}>Xeosha</Text>
         <JobCard hero={heroes[activeHero]} />
         <HeroCarousel heroes={heroes} viewSize={viewSize} activeHero={activeHero} setActiveHero={setActiveHero}/>   
       </ScrollView>
+
     </SafeAreaView>
   );
 };

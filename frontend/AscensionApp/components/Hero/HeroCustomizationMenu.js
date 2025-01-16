@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { MotiView } from 'moti';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HeroInventory from "./HeroInventory"
+import { IMAGES } from "../../constants/constants"
 
 const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
-  if (!visible) return null;
+  if (!visible)
+    return null;
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const customizationItems = [
     { id: 'sword', label: 'Sword', icon: 'shield-outline' },
@@ -14,6 +19,18 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
     { id: 'boots', label: 'Boots', icon: 'footsteps-outline' },
     { id: 'glove', label: 'Gloves', icon: 'hand-right-outline' },
   ];
+
+  const inventory = [
+    { id: '1', name: 'Steel Sword', category: 'sword', icon: 'shield', image: IMAGES.heroWeapo, isEquipped: false},
+    { id: '2', name: 'Iron Helm', category: 'helm', icon: 'headset', image: IMAGES.heroWeapo, isEquipped: false },
+    { id: '3', name: 'Leather Chestplate', category: 'chest', icon: 'shirt', image: IMAGES.heroWeapo, isEquipped: false },
+    { id: '4', name: 'Steel Leggings', category: 'legs', icon: 'walk', image: IMAGES.heroWeapo, isEquipped: false },
+    { id: '5', name: 'Swift Boots', category: 'boots', icon: 'footsteps', image: IMAGES.heroWeapo, isEquipped: false },
+    { id: '6', name: 'Battle Gloves', category: 'glove', icon: 'hand-right', image: IMAGES.heroWeapo, isEquipped: false },
+  ];
+
+  const filteredInventory = inventory.filter(item => item.category === selectedCategory);
+
 
   return (
     <MotiView
@@ -33,7 +50,7 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
           >
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => alert(`Selected: ${item.label}`)}
+              onPress={() => setSelectedCategory(item.id)}
             >
               <Ionicons name={item.icon} size={36} color="#FFD700" />
               <Text style={styles.iconLabel}>{item.label}</Text>
@@ -52,7 +69,7 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
           >
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => alert(`Selected: ${item.label}`)}
+              onPress={() => setSelectedCategory(item.id)}
             >
               <Ionicons name={item.icon} size={36} color="#FFD700" />
               <Text style={styles.iconLabel}>{item.label}</Text>
@@ -60,6 +77,14 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
           </MotiView>
         ))}
       </View>
+
+      {selectedCategory && (
+        <HeroInventory
+          items={filteredInventory}
+          onClose={() => setSelectedCategory(null)}
+        />
+      )}
+      
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Text style={styles.closeText}>Close</Text>
       </TouchableOpacity>

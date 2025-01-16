@@ -4,7 +4,7 @@ import { MotiView } from 'moti';
 import HeroCard from './HeroCard'; // Импортируем ваш компонент HeroCard
 import HeroCustomizationMenu from './HeroCustomizationMenu'; 
 
-const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
+const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize, updateHeroEquipment }) => {
 
   const [customizationVisible, setCustomizationVisible] = useState(false);
 
@@ -72,10 +72,10 @@ const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
         })}
       </View>
 
-      <TouchableOpacity style={styles.arrowLeft} onPress={() => rotateCarousel('left')}>
+      <TouchableOpacity style={styles.arrowLeft} onPress={() => rotateCarousel('rigth')}>
         <Text style={styles.arrowText}>←</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.arrowRight} onPress={() => rotateCarousel('right')}>
+      <TouchableOpacity style={styles.arrowRight} onPress={() => rotateCarousel('left')}>
         <Text style={styles.arrowText}>→</Text>
       </TouchableOpacity>
 
@@ -83,6 +83,7 @@ const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
         visible={customizationVisible}
         onClose={() => setCustomizationVisible(false)}
         hero={heroes[activeHero]}
+        updateHeroEquipment={updateHeroEquipment}
       />
 
     </View>
