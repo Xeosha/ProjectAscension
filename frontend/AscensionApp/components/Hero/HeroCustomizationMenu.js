@@ -3,16 +3,18 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { MotiView } from 'moti';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HeroInventory from "./HeroInventory"
-import { IMAGES } from "../../constants/constants"
+import { useInventory } from '../../hooks/useInventory';
 
 const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
   if (!visible)
     return null;
 
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { inventory, equipItem, unequipItem } = useInventory();
 
+  console.log("inventory: ", inventory)
   const customizationItems = [
-    { id: 'sword', label: 'Sword', icon: 'shield-outline' },
+    { id: 'weapon', label: 'Weapon', icon: 'shield-outline' },
     { id: 'helm', label: 'Helmet', icon: 'headset-outline' },
     { id: 'chest', label: 'Chest', icon: 'shirt-outline' },
     { id: 'legs', label: 'Legs', icon: 'walk-outline' },
@@ -20,16 +22,15 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
     { id: 'glove', label: 'Gloves', icon: 'hand-right-outline' },
   ];
 
-  const inventory = [
-    { id: '1', name: 'Steel Sword', category: 'sword', icon: 'shield', image: IMAGES.heroWeapo, isEquipped: false},
-    { id: '2', name: 'Iron Helm', category: 'helm', icon: 'headset', image: IMAGES.heroWeapo, isEquipped: false },
-    { id: '3', name: 'Leather Chestplate', category: 'chest', icon: 'shirt', image: IMAGES.heroWeapo, isEquipped: false },
-    { id: '4', name: 'Steel Leggings', category: 'legs', icon: 'walk', image: IMAGES.heroWeapo, isEquipped: false },
-    { id: '5', name: 'Swift Boots', category: 'boots', icon: 'footsteps', image: IMAGES.heroWeapo, isEquipped: false },
-    { id: '6', name: 'Battle Gloves', category: 'glove', icon: 'hand-right', image: IMAGES.heroWeapo, isEquipped: false },
-  ];
+  const handleEquipItem = (itemId) => {
+    equipItem(hero.id, selectedCategory, itemId);
+  };
 
-  const filteredInventory = inventory.filter(item => item.category === selectedCategory);
+  const handleUnequipItem = (slot) => {
+    unequipItem(hero.id, slot);
+  };
+
+  const filteredInventory = inventory.filter(item => item.type === selectedCategory);
 
 
   return (
@@ -49,7 +50,10 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
             style={styles.iconContainer}
           >
             <TouchableOpacity
-              style={styles.iconButton}
+              style={[
+                styles.iconButton,
+                selectedCategory === item.id && styles.selectedIcon
+              ]}
               onPress={() => setSelectedCategory(item.id)}
             >
               <Ionicons name={item.icon} size={36} color="#FFD700" />
@@ -68,7 +72,10 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
             style={styles.iconContainer}
           >
             <TouchableOpacity
-              style={styles.iconButton}
+              style={[
+                styles.iconButton,
+                selectedCategory === item.id && styles.selectedIcon
+              ]}
               onPress={() => setSelectedCategory(item.id)}
             >
               <Ionicons name={item.icon} size={36} color="#FFD700" />
@@ -81,6 +88,9 @@ const HeroCustomizationMenu = ({ visible, onClose, hero }) => {
       {selectedCategory && (
         <HeroInventory
           items={filteredInventory}
+          title={selectedCategory} 
+          onItemSelect={handleEquipItem}
+          onUnequip={() => handleUnequipItem(selectedCategory)}
           onClose={() => setSelectedCategory(null)}
         />
       )}

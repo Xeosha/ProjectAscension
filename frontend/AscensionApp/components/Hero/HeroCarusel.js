@@ -4,7 +4,7 @@ import { MotiView } from 'moti';
 import HeroCard from './HeroCard'; // Импортируем ваш компонент HeroCard
 import HeroCustomizationMenu from './HeroCustomizationMenu'; 
 
-const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize, updateHeroEquipment }) => {
+const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize }) => {
 
   const [customizationVisible, setCustomizationVisible] = useState(false);
 
@@ -83,7 +83,6 @@ const HeroCarousel = ({ activeHero, setActiveHero, heroes, viewSize, updateHeroE
         visible={customizationVisible}
         onClose={() => setCustomizationVisible(false)}
         hero={heroes[activeHero]}
-        updateHeroEquipment={updateHeroEquipment}
       />
 
     </View>

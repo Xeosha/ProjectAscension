@@ -3,31 +3,73 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Dimensions } from '
 import { MotiView } from 'moti';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Inventory = ({ items, onClose }) => {
+const { width, height } = Dimensions.get('window');
+
+const InventoryItem = ({ item, onSelect, index }) => (
+  <MotiView
+    from={{ opacity: 0, translateY: 20 }}
+    animate={{ opacity: 1, translateY: 0 }}
+    transition={{ delay: index * 50 }}
+  >
+    <TouchableOpacity
+      style={[
+        styles.itemContainer,
+        item.equippedBy && styles.itemEquipped
+      ]}
+      onPress={() => onSelect(item.id)}
+      disabled={item.equippedBy}
+    >
+      <Ionicons name={item.icon} size={24} color="#FFD700" />
+      <View style={styles.itemContent}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={styles.itemPower}>Power: {item.power}</Text>
+      </View>
+      {item.equippedBy && (
+        <Ionicons name="checkmark-circle" size={24} color="#4CAF50" />
+      )}
+    </TouchableOpacity>
+  </MotiView>
+);
+
+const HeroInventory = ({ items, title, onItemSelect, onUnequip, onClose }) => {
   return (
     <View style={styles.overlay}>
       <MotiView
-        from={{ translateY: Dimensions.get('window').height, opacity: 0 }}
-        animate={{ translateY: 0, opacity: 1 }}
-        exit={{ translateY: Dimensions.get('window').height, opacity: 0 }}
-        style={styles.inventoryContainer}
+        from={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        style={styles.modalContainer}
       >
-        <Text style={styles.inventoryTitle}>Inventory</Text>
-        <FlatList
-          data={items}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.inventoryItem}>
-              <Ionicons name={item.icon} size={36} color="#FFD700" />
-              <Text style={styles.inventoryLabel}>{item.name}</Text>
-              <TouchableOpacity style={styles.equipButton} onPress={() => {}}>
-                <Text style={styles.equipText}>Equip</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.closeText}>Close Inventory</Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>{title}</Text>
+          <TouchableOpacity onPress={onClose}>
+            <Ionicons name="close" size={24} color="#FFD700" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.listContainer}>
+          <FlatList
+            data={items}
+            renderItem={({ item, index }) => (
+              <InventoryItem
+                item={item}
+                onSelect={onItemSelect}
+                index={index}
+              />
+            )}
+            keyExtractor={item => item.id}
+            ListEmptyComponent={
+              <Text style={styles.emptyText}>No items available</Text>
+            }
+          />
+        </View>
+
+        <TouchableOpacity 
+          style={styles.unequipButton} 
+          onPress={onUnequip}
+        >
+          <Ionicons name="remove-circle-outline" size={20} color="#FFD700" />
+          <Text style={styles.unequipText}>Unequip</Text>
         </TouchableOpacity>
       </MotiView>
     </View>
@@ -43,59 +85,76 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1000, // Высокий zIndex
+    zIndex: 24,
   },
-  inventoryContainer: {
-    width: '90%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Полупрозрачный фон
-    borderRadius: 20,
-    padding: 20,
-    maxHeight: '70%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 10,
+  modalContainer: {
+    width: width * 0.8, // 80% от ширины экрана
+    maxHeight: height * 0.7, // 70% от высоты экрана
+    backgroundColor: '#333',
+    borderRadius: 10,
+    padding: 16,
+    width: 450,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
-  inventoryTitle: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  title: {
     fontSize: 18,
+    color: '#FFD700',
     fontWeight: 'bold',
-    color: '#FFF',
-    marginBottom: 10,
-    textAlign: 'center',
+    textTransform: 'capitalize',
   },
-  inventoryItem: {
+  listContainer: {
+    maxHeight: height * 0.5, // 50% от высоты экрана
+  },
+  itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    backgroundColor: '#444',
+    padding: 12,
+    marginBottom: 8,
+    borderRadius: 8,
   },
-  inventoryLabel: {
+  itemEquipped: {
+    backgroundColor: '#555',
+  },
+  itemContent: {
     flex: 1,
+    marginLeft: 12,
+  },
+  itemName: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  itemPower: {
+    color: '#aaa',
     fontSize: 14,
-    color: '#FFF',
   },
-  equipButton: {
-    backgroundColor: '#FFD700',
-    padding: 10,
-    borderRadius: 8,
+  emptyText: {
+    color: '#aaa',
+    textAlign: 'center',
+    padding: 16,
   },
-  equipText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: '#FFD700',
-    padding: 10,
-    borderRadius: 8,
+  unequipButton: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#333',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#FFD700',
   },
-  closeText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
-  },
+  unequipText: {
+    color: '#FFD700',
+    fontSize: 16,
+    marginLeft: 8,
+  }
 });
 
-export default Inventory;
+export default HeroInventory;

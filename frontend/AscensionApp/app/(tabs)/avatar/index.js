@@ -29,24 +29,9 @@ const HeroScreen = () => {
   }, [wp]); 
 
   const [heroes, setHeroes] = useState( [
-    { id: 1, name: "Aragorn", profession: "Warrior", image: IMAGES.hero, lvl: 17, power: 1000,
-      equippedItems: {
-        baseImage: IMAGES.heroAnim,
-        weapon: IMAGES.heroWeapon
-      },
-    },
-    { id: 1, name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200,
-      equippedItems: {
-        baseImage: IMAGES.heroAnim,
-        weapon: IMAGES.heroWeapon
-      },
-     },
-    { id: 1, name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k",
-      equippedItems: {
-        baseImage: IMAGES.heroAnim,
-        weapon: null,
-      },
-     },
+    { id: "hero1", name: "Aragorn", profession: "Warrior", image: IMAGES.hero, lvl: 17, power: 1000 },
+    { id: "hero2", name: "Legolas", profession: "Archer", image: IMAGES.hero, lvl: 18, power: 200 },
+    { id: "hero3", name: "Gandalf", profession: "Wizard", image: IMAGES.hero, lvl: 19, power: "20k" },
   ]);
 
 
