@@ -4,6 +4,7 @@ import { FONTS } from "../../constants/constants";
 import HeroAnim from "./HeroAnim";
 import { useInventory } from "../../hooks/useInventory";
 
+
 const HeroCard = ({ hero }) => {
   const { equipments } = useInventory();
   const heroEquipment = equipments[hero.id];

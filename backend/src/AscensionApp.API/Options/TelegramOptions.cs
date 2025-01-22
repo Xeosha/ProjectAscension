@@ -1,6 +1,4 @@
-﻿
-
-namespace TelegramBot.API.Options
+﻿namespace AscensionApp.API.Options
 {
     public class TelegramOptions
     {

@@ -7,6 +7,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramBot.API", "src\Tele
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "..\docker-compose.dcproj", "{B976CBA1-AB17-4BED-B85C-D9EB741DAE39}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TelegramBot", "TelegramBot", "{2997EEB7-0645-47CE-84F1-1F67183BAA34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{460B5BD3-581D-4E95-B1B1-7BF655ED321F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AscensionApp.API", "src\AscensionApp.API\AscensionApp.API.csproj", "{C268B4DA-BE43-4972-B5BB-D142A8B7A937}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AscensionApp.CORE", "src\AscensionApp.CORE\AscensionApp.CORE.csproj", "{12FFFC39-6626-46BD-A729-8BD2BC8686A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AscensionApp.Application", "src\AscensionApp.Application\AscensionApp.Application.csproj", "{027740B6-DC5D-49CF-BB52-419F987C7BC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsscensionApp.Data", "src\AsscensionApp.Data\AsscensionApp.Data.csproj", "{2FD285BB-DAE7-4C67-9E17-C138785E54F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsscensionApp.Infrastructure", "src\AsscensionApp.Infrastructure\AsscensionApp.Infrastructure.csproj", "{4D997707-3824-4D3C-9C25-2C40DE17C7D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +35,37 @@ Global
 		{B976CBA1-AB17-4BED-B85C-D9EB741DAE39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B976CBA1-AB17-4BED-B85C-D9EB741DAE39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B976CBA1-AB17-4BED-B85C-D9EB741DAE39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C268B4DA-BE43-4972-B5BB-D142A8B7A937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C268B4DA-BE43-4972-B5BB-D142A8B7A937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C268B4DA-BE43-4972-B5BB-D142A8B7A937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C268B4DA-BE43-4972-B5BB-D142A8B7A937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FFFC39-6626-46BD-A729-8BD2BC8686A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FFFC39-6626-46BD-A729-8BD2BC8686A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FFFC39-6626-46BD-A729-8BD2BC8686A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FFFC39-6626-46BD-A729-8BD2BC8686A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{027740B6-DC5D-49CF-BB52-419F987C7BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027740B6-DC5D-49CF-BB52-419F987C7BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027740B6-DC5D-49CF-BB52-419F987C7BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027740B6-DC5D-49CF-BB52-419F987C7BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD285BB-DAE7-4C67-9E17-C138785E54F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD285BB-DAE7-4C67-9E17-C138785E54F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD285BB-DAE7-4C67-9E17-C138785E54F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD285BB-DAE7-4C67-9E17-C138785E54F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D997707-3824-4D3C-9C25-2C40DE17C7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D997707-3824-4D3C-9C25-2C40DE17C7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D997707-3824-4D3C-9C25-2C40DE17C7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D997707-3824-4D3C-9C25-2C40DE17C7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{012BDAF7-D9A1-43EB-811D-C57E0D9E15DC} = {2997EEB7-0645-47CE-84F1-1F67183BAA34}
+		{C268B4DA-BE43-4972-B5BB-D142A8B7A937} = {460B5BD3-581D-4E95-B1B1-7BF655ED321F}
+		{12FFFC39-6626-46BD-A729-8BD2BC8686A3} = {460B5BD3-581D-4E95-B1B1-7BF655ED321F}
+		{027740B6-DC5D-49CF-BB52-419F987C7BC7} = {460B5BD3-581D-4E95-B1B1-7BF655ED321F}
+		{2FD285BB-DAE7-4C67-9E17-C138785E54F1} = {460B5BD3-581D-4E95-B1B1-7BF655ED321F}
+		{4D997707-3824-4D3C-9C25-2C40DE17C7D7} = {460B5BD3-581D-4E95-B1B1-7BF655ED321F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7484E0E5-6707-4E4D-A90D-F05BE396C6CA}

@@ -13,7 +13,7 @@ export default function RootLayout() {
   }
 
   return (
-    <InventoryProvider>
+    <InventoryProvider> 
       {
         <Stack 
         screenOptions={{ headerShown: false }}

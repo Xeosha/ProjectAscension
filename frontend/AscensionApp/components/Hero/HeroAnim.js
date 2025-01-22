@@ -1,13 +1,16 @@
+import {useRef} from 'react';
 import { View, Image, StyleSheet } from "react-native";
 
 const HeroAnim = ( { equippedItems } ) => {
+  const animationKey = useRef(Date.now()).current;
+  
   return (
     <View style={styles.container}>
       {equippedItems.baseImage && (
-        <Image source={equippedItems.baseImage} style={styles.overlayImage} />
+        <Image source={equippedItems.baseImage} style={styles.overlayImage} key={`weapon_${animationKey}`} />
       )}
       {equippedItems.weapon && (
-        <Image source={equippedItems.weapon} style={styles.overlayImage} />
+        <Image source={equippedItems.weapon} style={styles.overlayImage} key={`weapon_${animationKey}`}/>
       )}
     </View>
   );

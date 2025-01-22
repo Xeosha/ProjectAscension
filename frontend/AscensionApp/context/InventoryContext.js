@@ -22,7 +22,7 @@ const initialState = {
       equippedBy: null
     },
     {
-      id: 'helmet1',
+      id: 'sword3',
       name: 'Steel Helmet',
       type: 'weapon',
       power: 30,
@@ -42,7 +42,7 @@ const initialState = {
     },
     'hero3': {
       baseImage: IMAGES.heroAnim,
-      weapon: IMAGES.heroWeapon,
+      weapon: null,
     }
   },
   isLoading: false,

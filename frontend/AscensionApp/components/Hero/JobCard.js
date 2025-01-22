@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   jobText: { 
-    color: '#fff', 
+    color: "#ccc",
     fontSize: 12, 
     fontFamily: FONTS.regular,
   },
   equipButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#FFD700',
     padding: 8,
     borderRadius: 5,
     marginLeft: 8,

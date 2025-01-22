@@ -3,7 +3,6 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Dimensions } from '
 import { MotiView } from 'moti';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const { width, height } = Dimensions.get('window');
 
 const InventoryItem = ({ item, onSelect, index }) => (
   <MotiView
@@ -85,11 +84,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 24,
+    zIndex: 2,
   },
   modalContainer: {
-    width: width * 0.8, // 80% от ширины экрана
-    maxHeight: height * 0.7, // 70% от высоты экрана
     backgroundColor: '#333',
     borderRadius: 10,
     padding: 16,
@@ -109,7 +106,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   listContainer: {
-    maxHeight: height * 0.5, // 50% от высоты экрана
+
   },
   itemContainer: {
     flexDirection: 'row',
@@ -151,7 +148,7 @@ const styles = StyleSheet.create({
     borderColor: '#FFD700',
   },
   unequipText: {
-    color: '#FFD700',
+    color: '#FFD700', 
     fontSize: 16,
     marginLeft: 8,
   }
