@@ -12,6 +12,7 @@ import { COLORS, FONTS } from "../../../constants/constants";
 import HeroCarousel from "../../../components/Hero/HeroCarusel";
 import JobCard from "../../../components/Hero/JobCard";
 import { Emitter } from "react-native-particles";
+import { useTelegramUserUnsafe  } from "../../../hooks/useTelegramScript";
 
 const RarityBadge = ({ rarity }) => {
   const rarityColors = {
@@ -40,6 +41,9 @@ const HeroScreen = () => {
   const [viewSize, setViewSize] = useState(1);
 
   const [activeHero, setActiveHero] = useState(0);
+
+  const user = useTelegramUserUnsafe();
+  console.log(user.userName);
 
   useEffect(() => {
     const newMargin = wp(32) > 400 ? wp(32) : 15;
@@ -137,6 +141,7 @@ const HeroScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
+        <Text style={styles.title}>{user.userName}</Text>
         <Text style={styles.title}>Xeosha</Text>
         <JobCard hero={currentHero} />
         <HeroCarousel heroes={heroes} viewSize={viewSize} activeHero={activeHero} setActiveHero={setActiveHero}/>   
