@@ -1,6 +1,6 @@
 ﻿
 
-namespace AsscensionApp.Data.Entities
+namespace GameService.Data.Entities
 {
     public class CharacterEntity : BaseEntity
     {

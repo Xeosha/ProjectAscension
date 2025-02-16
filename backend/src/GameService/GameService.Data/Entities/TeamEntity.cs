@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsscensionApp.Data.Entities
+namespace GameService.Data.Entities
 {
     public class TeamEntity : BaseEntity
     {
