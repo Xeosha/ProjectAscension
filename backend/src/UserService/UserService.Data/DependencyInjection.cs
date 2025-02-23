@@ -16,10 +16,10 @@ namespace UserService.Infrastructure
 
             services.AddDbContext<UserServiceDbContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString(nameof(UserServiceDbContext)
-                    ?? Environment.GetEnvironmentVariable(nameof(UserServiceDbContext))
-                    ?? throw new ApplicationException("Missing postgres configuration")
-                    ));
+                var connectionString = configuration.GetConnectionString("UserServiceDbContext")
+                    ?? throw new ApplicationException("Missing database configuration");
+
+                options.UseNpgsql(connectionString);
             });
 
             services.RegisterIdentity();

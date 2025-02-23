@@ -8,26 +8,16 @@ services:
         context: .
         dockerfile: backend/src/UserService/UserService.API/Dockerfile
     environment:
-      - UserServiceDbContext=${DB_CONNECTION}  
+      - ConnectionStrings__UserServiceDbContext=${DB_CONNECTION}  
       - JWT__Issuer=${JWT__Issuer}
       - JWT__Audience=${JWT__Audience}
       - JWT__Key=${JWT__Key}
       - JWT__ExpiredMinutesTime=${JWT__ExpiredMinutesTime}
     ports:
-      - "6000:8080"
-      - "6060:8081" 
+      - "8080:8080"
+      - "8081:8081" 
     depends_on:
       - userservice.db
-  
-  gameservice.api:
-    image: gameservice
-    container_name: gameservice.api
-    build:
-        context: .
-        dockerfile: backend/src/GameService/GameService.API/Dockerfile
-    ports:
-      - "6001:8080"
-      - "6061:8081" 
   
   userservice.db:
     container_name: userservice.db
@@ -41,7 +31,7 @@ services:
       - postgres-data-userservice:/var/lib/postgresql/data
     ports:
       - "5432:5432"  
-
+ 
   pgadmin:
     restart: always
     image: dpage/pgadmin4
