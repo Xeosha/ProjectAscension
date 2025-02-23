@@ -6,6 +6,11 @@
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>b976cba1-ab17-4bed-b85c-d9eb741dae39</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceName>gameservice.api</DockerServiceName>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

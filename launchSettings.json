@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "pgadmin": "StartWithoutDebugging",
+        "userservice.api": "StartDebugging",
+        "userservice.db": "StartWithoutDebugging",
+        "gameservice.api": "StartDebugging"
+      }
+    }
+  }
+}
