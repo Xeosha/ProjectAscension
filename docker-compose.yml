@@ -8,14 +8,14 @@ services:
         context: .
         dockerfile: backend/src/UserService/UserService.API/Dockerfile
     environment:
-      - ConnectionStrings__UserServiceDbContext=${DB_CONNECTION}  
+      - ConnectionStrings__UserServiceDbContext=${DB_CONNECTION_USERSERVICE}  
       - JWT__Issuer=${JWT__Issuer}
       - JWT__Audience=${JWT__Audience}
       - JWT__Key=${JWT__Key}
       - JWT__ExpiredMinutesTime=${JWT__ExpiredMinutesTime}
     ports:
-      - "8080:8080"
-      - "8081:8081" 
+      - "6000:8080"
+      - "6060:8081"
     depends_on:
       - userservice.db
   
@@ -24,14 +24,43 @@ services:
     restart: always
     image: postgres:latest  
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB_1}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres-data-userservice:/var/lib/postgresql/data
     ports:
       - "5432:5432"  
- 
+
+  gameservice.api:
+    image: gameservice
+    container_name: gameservice.api
+    env_file:
+      - .env
+    build:
+        context: .
+        dockerfile: backend/src/GameService/GameService.API/Dockerfile
+    environment:
+      - ConnectionStrings__GameServiceDbContext=${DB_CONNECTION_GAMESERVICE}  
+    ports:
+      - "6001:8080"
+      - "6061:8081"
+    depends_on:
+      - gameservice.db
+
+  gameservice.db:
+    container_name: gameservice.db
+    restart: always
+    image: postgres:latest  
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_2}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data-gameservice:/var/lib/postgresql/data
+    ports:
+      - "5433:5432" 
+
   pgadmin:
     restart: always
     image: dpage/pgadmin4
@@ -48,4 +77,5 @@ services:
 
 volumes:
   postgres-data-userservice:
+  postgres-data-gameservice:
   pgadmin-data:

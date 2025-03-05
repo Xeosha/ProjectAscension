@@ -12,19 +12,21 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/AscensionApp.API/AscensionApp.API.csproj", "src/AscensionApp.API/"]
-RUN dotnet restore "./src/AscensionApp.API/AscensionApp.API.csproj"
+COPY ["GameService.API/GameService.API.csproj", "GameService.API/"]
+COPY ["GameService.Data/GameService.Data.csproj", "GameService.Data/"]
+COPY ["GameService.Core/GameService.CORE.csproj", "GameService.Core/"]
+RUN dotnet restore "./GameService.API/GameService.API.csproj"
 COPY . .
-WORKDIR "/src/src/AscensionApp.API"
-RUN dotnet build "./AscensionApp.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/GameService.API"
+RUN dotnet build "./GameService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AscensionApp.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./GameService.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AscensionApp.API.dll"]
+ENTRYPOINT ["dotnet", "GameService.API.dll"]

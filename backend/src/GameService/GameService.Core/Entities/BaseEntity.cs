@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameService.Data.Entities
+namespace GameService.CORE.Entities
 {
     public abstract class BaseEntity
     {

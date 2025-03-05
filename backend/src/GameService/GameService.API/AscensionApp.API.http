@@ -1,6 +1,0 @@
-@AscensionApp.API_HostAddress = http://localhost:5239
-
-GET {{AscensionApp.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
