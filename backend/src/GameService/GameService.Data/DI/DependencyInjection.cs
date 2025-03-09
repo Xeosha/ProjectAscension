@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameService.CORE.Interfaces.Repositories;
+using GameService.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using static CSharpFunctionalExtensions.Result;
 
 namespace GameService.Data.DI
 {
@@ -8,6 +11,22 @@ namespace GameService.Data.DI
     {
         public static IServiceCollection AddData(
             this IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddDb(configuration)
+                .AddRepositories();
+
+            return services;
+        }
+
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<ICharactersRepository, CharactersRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddDb(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GameServiceDbContext>(options =>
             {
@@ -18,5 +37,7 @@ namespace GameService.Data.DI
             });
             return services;
         }
+
+
     }
 }

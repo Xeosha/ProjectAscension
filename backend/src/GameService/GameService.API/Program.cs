@@ -1,6 +1,9 @@
-using GameService.Data;
+
 using GameService.Data.DI;
+using GameService.Application.DI;
+using GameService.Data;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 // onion DI
 builder.Services.AddData(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -28,7 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseAuthentication();    
 app.UseAuthorization();
 
 app.MapControllers();

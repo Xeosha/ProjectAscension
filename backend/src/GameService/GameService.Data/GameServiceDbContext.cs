@@ -7,8 +7,8 @@ namespace GameService.Data
     public class GameServiceDbContext : DbContext
     {
         public DbSet<UserCharacterEntity> UserCharacters { get; set; }
-        public DbSet<CharacterEntity> CharacterEntities { get; set; }
-        public DbSet<CharacterProffesionEntity> CharacterProfessions { get; set; }
+        public DbSet<CharacterEntity> Characters { get; set; }
+        public DbSet<ProffesionEntity> CharacterProfessions { get; set; }
 
         public DbSet<ClothingEntity> Clothings { get; set; }
         public DbSet<InventoryEntity> Inventories { get; set; }
@@ -29,6 +29,7 @@ namespace GameService.Data
             modelBuilder.ApplyConfiguration(new ClothingConfiguration());
             modelBuilder.ApplyConfiguration(new TeamConfiguration());
             modelBuilder.ApplyConfiguration(new CharacterConfiguration());
+            modelBuilder.ApplyConfiguration(new ProffesionConfiguration());
 
             modelBuilder
             .Entity<InventoryEntity>()

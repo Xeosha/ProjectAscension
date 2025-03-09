@@ -3,6 +3,7 @@ using System;
 using GameService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GameService.Data.Migrations
 {
     [DbContext(typeof(GameServiceDbContext))]
-    partial class GameServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250306083846_ProffesionUpdate")]
+    partial class ProffesionUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,9 +167,6 @@ namespace GameService.Data.Migrations
 
                     b.Property<Guid>("CharacterId")
                         .HasColumnType("uuid");
-
-                    b.Property<long>("Exp")
-                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("ProffesionId")
                         .HasColumnType("uuid");
