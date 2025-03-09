@@ -38,6 +38,7 @@ namespace GameService.Application.Commands.Characters.Create
             var entity = result.Value;
 
             await _charactersRepository.Add(entity);
+           
 
             _logger.LogInformation("Created character {name} with id {id}", entity.Name, entity.Id);
 

@@ -36,6 +36,9 @@ namespace GameService.CORE.Entities
         public uint BaseDefense = 1;
         public uint BaseHealth = 1;
 
+        public Guid UserCharacterId;
+        public UserCharacterEntity? UserCharacter;
+
         private CharacterEntity()
         {
 

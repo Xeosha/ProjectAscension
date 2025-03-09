@@ -60,15 +60,20 @@ namespace GameService.Data.Repositories
             return character;
         }
 
-        public async Task<Result<CharacterEntity, Error>> Update(CharacterEntity character)
+        public async Task<Result<CharacterEntity, Error>> UpdateMainInfo(Guid id, string name, string biography, uint age)
         {
-            var existing = await _dbContext.Characters.FindAsync(character.Id);
+            var existing = await _dbContext.Characters.FindAsync(id);
             if (existing == null)
             {
-                return Errors.General.NotFound(character.Id);   
+                return Errors.General.NotFound(id);   
             }
 
+            existing.Name = name;   
+            existing.Biography = biography; 
+            existing.Age = age; 
+
             _dbContext.Characters.Update(existing);
+
             await _dbContext.SaveChangesAsync();
 
             return existing;

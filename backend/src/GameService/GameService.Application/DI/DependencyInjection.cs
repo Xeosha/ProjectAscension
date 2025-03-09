@@ -4,6 +4,8 @@ using GameService.CORE.Interfaces.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using GameService.Application.Commands.Characters.Create;
+using GameService.Application.Commands.Characters.Delete;
+using GameService.Application.Commands.Characters.Update;
 
 namespace GameService.Application.DI
 {
@@ -26,6 +28,8 @@ namespace GameService.Application.DI
                 .WithScopedLifetime());
 
             services.AddScoped<IValidator<CreateCharacterCommand>, CreateCharacterCommandValidator>();
+            services.AddScoped<IValidator<DeleteCharacterCommand>, DeleteCharacterCommandValidator>();
+            services.AddScoped<IValidator<UpdateCharacterMainInfoCommand>, UpdateCharacterMainInfoCommandValidator>();
 
             return services;
         }

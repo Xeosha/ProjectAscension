@@ -12,7 +12,7 @@ namespace GameService.CORE.Interfaces.Repositories
         Task<IEnumerable<CharacterEntity>> GetAll();
         Task<IEnumerable<CharacterEntity>> Find(Expression<Func<CharacterEntity, bool>> predicate);
         Task<Result> Add(CharacterEntity character);
-        Task<Result<CharacterEntity, Error>> Update(CharacterEntity character);
+        Task<Result<CharacterEntity, Error>> UpdateMainInfo(Guid id, string name, string biography, uint age);
         Task<Result<CharacterEntity, Error>> Delete(Guid id);
 
     }

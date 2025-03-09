@@ -1,7 +1,5 @@
 ﻿using GameService.Application.Commands.Characters.Create;
 using GameService.CORE.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.Numerics;
 
 namespace GameService.API.Contracts.Character
 {
