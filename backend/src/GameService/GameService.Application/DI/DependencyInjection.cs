@@ -1,11 +1,12 @@
-﻿
-
-using GameService.CORE.Interfaces.Abstractions;
+﻿using GameService.CORE.Interfaces.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using GameService.Application.Commands.Characters.Create;
 using GameService.Application.Commands.Characters.Delete;
-using GameService.Application.Commands.Characters.Update;
+using GameService.Application.Commands.Characters.UpdateMainInfo;
+using GameService.Application.Commands.Proffesions.Delete;
+using GameService.Application.Commands.Proffesions.Create;
+using GameService.Application.Commands.Proffesions.Update;
 
 namespace GameService.Application.DI
 {
@@ -30,6 +31,12 @@ namespace GameService.Application.DI
             services.AddScoped<IValidator<CreateCharacterCommand>, CreateCharacterCommandValidator>();
             services.AddScoped<IValidator<DeleteCharacterCommand>, DeleteCharacterCommandValidator>();
             services.AddScoped<IValidator<UpdateCharacterMainInfoCommand>, UpdateCharacterMainInfoCommandValidator>();
+
+            services.AddScoped<IValidator<CreateProffesionCommand>, CreateProffesionCommandValidator>();
+            services.AddScoped<IValidator<DeleteProffesionCommand>, DeleteProffesionCommandValidator>();
+            services.AddScoped<IValidator<UpdateProffesionCommand>, UpdateProffesionCommandValidator>();
+
+
 
             return services;
         }

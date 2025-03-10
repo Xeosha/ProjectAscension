@@ -3,6 +3,7 @@ using System;
 using GameService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GameService.Data.Migrations
 {
     [DbContext(typeof(GameServiceDbContext))]
-    partial class GameServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250310093033_AddUserAndUpdate")]
+    partial class AddUserAndUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,9 +274,8 @@ namespace GameService.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("GameService.CORE.Entities.ProffesionEntity", "Proffesion")
-                        .WithMany("UserCharacters")
-                        .HasForeignKey("ProffesionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("ProffesionId");
 
                     b.HasOne("GameService.CORE.Entities.TeamEntity", null)
                         .WithMany("Characters")
@@ -305,11 +307,6 @@ namespace GameService.Data.Migrations
             modelBuilder.Entity("GameService.CORE.Entities.InventoryEntity", b =>
                 {
                     b.Navigation("InventoryClothings");
-                });
-
-            modelBuilder.Entity("GameService.CORE.Entities.ProffesionEntity", b =>
-                {
-                    b.Navigation("UserCharacters");
                 });
 
             modelBuilder.Entity("GameService.CORE.Entities.TeamEntity", b =>

@@ -36,10 +36,10 @@ namespace GameService.CORE.Entities
         public uint BaseDefense = 1;
         public uint BaseHealth = 1;
 
-        public Guid UserCharacterId;
-        public UserCharacterEntity? UserCharacter;
+        public List<UserEntity> Users { get; set; } = new();
+        public List<UserCharacterEntity> UserCharacters { get; set; } = new();
 
-        private CharacterEntity()
+        private CharacterEntity() : base()
         {
 
         }
@@ -47,7 +47,7 @@ namespace GameService.CORE.Entities
         public static Result<CharacterEntity, Error> Create(
             string name, string biography, CharacterRarity rarity,
             uint age, uint minLevel, uint maxLevel,
-            uint baseAttack, uint baseDefense, uint baseHealth)
+            uint baseAttack, uint baseDefense, uint baseHealth) 
         {
             var entity = new CharacterEntity
             {

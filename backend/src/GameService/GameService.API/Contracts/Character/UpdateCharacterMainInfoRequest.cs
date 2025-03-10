@@ -1,5 +1,6 @@
-﻿using GameService.Application.Commands.Characters.Update;
+﻿
 
+using GameService.Application.Commands.Characters.UpdateMainInfo;
 
 namespace GameService.API.Contracts.Character
 {

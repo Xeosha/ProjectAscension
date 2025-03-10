@@ -2,7 +2,7 @@
 
 using GameService.CORE.Interfaces.Abstractions;
 
-namespace GameService.Application.Commands.Characters.Update
+namespace GameService.Application.Commands.Characters.UpdateMainInfo
 {
 
     public record UpdateCharacterMainInfoCommand

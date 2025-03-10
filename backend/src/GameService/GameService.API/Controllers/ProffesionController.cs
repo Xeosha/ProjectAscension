@@ -1,21 +1,30 @@
-using GameService.API.Contracts.Character;
+﻿
+using GameService.API.Contracts.Proffesion;
 using GameService.API.Extensions;
-using GameService.Application.Commands.Characters.Create;
-using GameService.Application.Commands.Characters.Delete;
-using GameService.Application.Commands.Characters.UpdateMainInfo;
-using GameService.Application.Queries.Characters;
+using GameService.Application.Commands.Proffesions.Create;
+using GameService.Application.Commands.Proffesions.Delete;
+using GameService.Application.Commands.Proffesions.Update;
+using GameService.Application.Queries.Proffesions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameService.API.Controllers
 {
     [ApiController]
-    [Route("/characters")]
-    public class CharacterController : ControllerBase
+    [Route("/proffesions")]
+    public class ProffesionController : ControllerBase
     {
+        private readonly ILogger<ProffesionController> _logger;
+
+        public ProffesionController(ILogger<ProffesionController> logger)
+        {
+            _logger = logger;
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> Create(
-         [FromServices] CreateCharacterHandler handler,
-         [FromBody] CreateCharacterRequest request,
+         [FromServices] CreateProffesionHandler handler,
+         [FromBody] CreateProffesionRequest request,
          CancellationToken cancellationToken)
         {
             var result = await handler.Handle(request.ToCommand(), cancellationToken);
@@ -28,10 +37,10 @@ namespace GameService.API.Controllers
 
         [HttpGet]
         public async Task<ActionResult> Get(
-        [FromServices] GetAllCharactersHandler handler,
+        [FromServices] GetAllProffesionsHandler handler,
         CancellationToken cancellationToken)
         {
-            var query = new GetAllCharactersQuery();
+            var query = new GetAllProffesionsQuery();
 
             var response = await handler.Handle(query, cancellationToken);
 
@@ -39,11 +48,11 @@ namespace GameService.API.Controllers
         }
 
 
-        [HttpPut("{id:guid}/main-info")]
-        public async Task<ActionResult> UpdateMainInfo(
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult> Update(
          [FromRoute] Guid id,
-         [FromServices] UpdateCharacterMainInfoHandler handler,
-         [FromBody] UpdateCharacterMainInfoRequest request,
+         [FromServices] UpdateProffesionHandler handler,
+         [FromBody] UpdateProffesionRequest request,
          CancellationToken cancellationToken)
         {
             var command = request.ToCommand(id);
@@ -59,10 +68,10 @@ namespace GameService.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> Delete(
          [FromRoute] Guid id,
-         [FromServices] DeleteCharacterHandler handler,
+         [FromServices] DeleteProffesionHandler handler,
          CancellationToken cancellationToken)
         {
-            var command = new DeleteCharacterCommand(id);
+            var command = new DeleteProffesionCommand(id);
 
             var result = await handler.Handle(command, cancellationToken);
 
@@ -71,5 +80,7 @@ namespace GameService.API.Controllers
 
             return Ok(result.Value);
         }
+
+
     }
 }

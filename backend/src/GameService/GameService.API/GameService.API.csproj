@@ -22,4 +22,10 @@
     <ProjectReference Include="..\GameService.Data\GameService.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\Team\" />
+    <Folder Include="Contracts\User\" />
+    <Folder Include="Contracts\UserCharacter\" />
+  </ItemGroup>
+
 </Project>

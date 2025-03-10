@@ -1,16 +1,11 @@
-﻿
-
-
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using FluentValidation;
-using GameService.Application.Commands.Characters.Create;
 using GameService.CORE.Common;
-using GameService.CORE.Entities;
 using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace GameService.Application.Commands.Characters.Update
+namespace GameService.Application.Commands.Characters.UpdateMainInfo
 {
     public class UpdateCharacterMainInfoHandler : ICommandHandler<Guid, UpdateCharacterMainInfoCommand>
     {

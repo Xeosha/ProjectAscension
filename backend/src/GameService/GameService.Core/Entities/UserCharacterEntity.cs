@@ -3,22 +3,14 @@
 namespace GameService.CORE.Entities
 {
     public class UserCharacterEntity : BaseEntity
-    {
-        public Guid UserId { get; set; }
-
-        
-        public uint ExpPerLevel = 100;
-          
-
+    {     
         public uint Attack;
         public uint Defense;
         public uint Health;
 
-        public uint Power => CalculatePower();
-
-
-        private uint _exp;
         public uint Level = 1;
+        
+        private uint _exp;
         public uint Exp
         {
             get => _exp;
@@ -28,6 +20,10 @@ namespace GameService.CORE.Entities
                 CheckLevelUp(); // Проверка повышения уровня при изменении опыта
             }
         }
+
+        public uint Power => CalculatePower();
+        public uint ExpPerLevel => CalculateExpPerLevel();
+
         public void AddExp(uint amount)
         {
             if (amount > 0) Exp += amount;
@@ -88,6 +84,10 @@ namespace GameService.CORE.Entities
             }
         }
 
+        // --- Игрок ---
+        public Guid UserId { get; init; } // Инициализируется один раз
+        public UserEntity? User { get; set; }
+
         private UserCharacterEntity()
         { 
 
@@ -119,6 +119,11 @@ namespace GameService.CORE.Entities
         private uint CalculatePower()
         {
             return Level * 10 + Attack + Defense;
+        }
+
+        private uint CalculateExpPerLevel()
+        {
+            return Level * 10;
         }
 
         private void InitializeFromCharacter()

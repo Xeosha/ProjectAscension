@@ -6,5 +6,10 @@ namespace GameService.CORE.Entities
     {
         [Key]
         public Guid Id { get; set; }
+
+        public BaseEntity()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

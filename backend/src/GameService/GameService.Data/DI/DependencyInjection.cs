@@ -22,6 +22,7 @@ namespace GameService.Data.DI
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<ICharactersRepository, CharactersRepository>();
+            services.AddScoped<IProffesionsRepository, ProffesionRepository>();
 
             return services;
         }
