@@ -2,6 +2,7 @@
 using FluentValidation;
 using GameService.CORE.Common;
 using GameService.CORE.Entities;
+using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
@@ -13,15 +14,18 @@ namespace GameService.Application.Commands.Proffesions.Update
         private readonly IProffesionsRepository _proffesionsRepository;
         private readonly IValidator<UpdateProffesionCommand> _validator;
         private readonly ILogger<UpdateProffesionHandler> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UpdateProffesionHandler(
             IProffesionsRepository proffesionsRepository,
             IValidator<UpdateProffesionCommand> validator,
-            ILogger<UpdateProffesionHandler> logger)
+            ILogger<UpdateProffesionHandler> logger,
+            IUnitOfWork unitOfWork)
         {
             _proffesionsRepository = proffesionsRepository;
             _validator = validator;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid, ErrorList>> Handle(UpdateProffesionCommand command, CancellationToken cancellationToken = default)
@@ -47,6 +51,8 @@ namespace GameService.Application.Commands.Proffesions.Update
 
             if (!result.IsSuccess)
                 return result.Error.ToErrorList();
+
+            await _unitOfWork.SaveChanges();
 
             var entity = result.Value;
 

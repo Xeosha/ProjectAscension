@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using GameService.CORE.Common;
+using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
@@ -12,12 +13,17 @@ namespace GameService.Application.Commands.Characters.Delete
         private readonly ICharactersRepository _charactersRepository;
         private readonly IValidator<DeleteCharacterCommand> _validator;
         private readonly ILogger<DeleteCharacterHandler> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteCharacterHandler(ICharactersRepository charactersRepository, IValidator<DeleteCharacterCommand> validator, ILogger<DeleteCharacterHandler> logger)
+        public DeleteCharacterHandler(ICharactersRepository charactersRepository,
+            IValidator<DeleteCharacterCommand> validator, 
+            ILogger<DeleteCharacterHandler> logger,
+            IUnitOfWork unitOfWork)
         {
             _charactersRepository = charactersRepository;
             _validator = validator;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid, ErrorList>> Handle(
@@ -36,8 +42,9 @@ namespace GameService.Application.Commands.Characters.Delete
             if (result.IsFailure)
                 return result.Error.ToErrorList();
 
-            var character = result.Value;
+            await _unitOfWork.SaveChanges();
 
+            var character = result.Value;
 
             _logger.LogInformation("Updated deleted with id {character.Id}", character.Id);
 

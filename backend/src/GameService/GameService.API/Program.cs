@@ -1,8 +1,7 @@
-
 using GameService.Data.DI;
 using GameService.Application.DI;
-using GameService.Data;
 using Microsoft.EntityFrameworkCore;
+using GameService.Data.DbContexts;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +39,7 @@ app.MapControllers();
 // dotnet ef migrations add Init -s src/GameService/GameService.API/ -p src/GameService/GameService.Data
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<GameServiceDbContext>();
+    var dbContext = scope.ServiceProvider.GetRequiredService<WriteDbContext>();
     // Обновляем базу данных, если есть миграции
     dbContext.Database.Migrate();
 }

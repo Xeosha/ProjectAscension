@@ -2,12 +2,13 @@
 using GameService.CORE.Common;
 using GameService.CORE.Entities;
 using GameService.CORE.Interfaces.Repositories;
+using GameService.Data.DbContexts;
 
 namespace GameService.Data.Repositories
 {
-    public class CharactersRepository : RepositoryCRUD<CharacterEntity>, ICharactersRepository
+    public class CharactersRepository : RepositoryBase<CharacterEntity>, ICharactersRepository
     {
-        public CharactersRepository(GameServiceDbContext dbContext) : base(dbContext)
+        public CharactersRepository(WriteDbContext dbContext) : base(dbContext)
         {
         }
 

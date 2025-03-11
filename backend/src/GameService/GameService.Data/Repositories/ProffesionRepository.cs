@@ -1,12 +1,13 @@
 ﻿
 using GameService.CORE.Entities;
 using GameService.CORE.Interfaces.Repositories;
+using GameService.Data.DbContexts;
 
 namespace GameService.Data.Repositories
 {
-    public class ProffesionRepository : RepositoryCRUD<ProffesionEntity>, IProffesionsRepository
+    public class ProffesionRepository : RepositoryBase<ProffesionEntity>, IProffesionsRepository
     {
-        public ProffesionRepository(GameServiceDbContext dbContext) : base(dbContext) { }
+        public ProffesionRepository(WriteDbContext dbContext) : base(dbContext) { }
 
     }
 }

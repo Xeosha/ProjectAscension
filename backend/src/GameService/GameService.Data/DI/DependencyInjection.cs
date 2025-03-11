@@ -1,4 +1,6 @@
-﻿using GameService.CORE.Interfaces.Repositories;
+﻿using GameService.CORE.Interfaces;
+using GameService.CORE.Interfaces.Repositories;
+using GameService.Data.DbContexts;
 using GameService.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +16,7 @@ namespace GameService.Data.DI
         {
             services
                 .AddDb(configuration)
+                .AddUnitOfWork()
                 .AddRepositories();
 
             return services;
@@ -23,19 +26,40 @@ namespace GameService.Data.DI
         {
             services.AddScoped<ICharactersRepository, CharactersRepository>();
             services.AddScoped<IProffesionsRepository, ProffesionRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<ITeamsRepository, TeamsRepository>();
+            services.AddScoped<IUserCharactersRepository, UserCharactersRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
 
         private static IServiceCollection AddDb(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<GameServiceDbContext>(options =>
+            services.AddDbContext<WriteDbContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("GameServiceDbContext")
                     ?? throw new ApplicationException("Missing database configuration");
 
                 options.UseNpgsql(connectionString);
             });
+
+            services.AddDbContext<ReadDbContext>(options =>
+            {
+                var connectionString = configuration.GetConnectionString("GameServiceDbContext")
+                    ?? throw new ApplicationException("Missing database configuration");
+
+                options.UseNpgsql(connectionString);
+            });
+
+            services.AddScoped<IReadDbContext, ReadDbContext>();
+
             return services;
         }
 

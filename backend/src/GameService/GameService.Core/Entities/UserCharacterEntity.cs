@@ -43,19 +43,6 @@ namespace GameService.CORE.Entities
             // Увеличиваем характеристики при повышении уровня
         }
 
-        // --- Экипировка ---
-        private List<InventoryClothingEntity> _clothings = new();
-        public List<InventoryClothingEntity> Clothings
-        {
-            get => _clothings;
-            set
-            {
-                _clothings = value;
-                UpdateStats(); // Пересчет характеристик при изменении экипировки
-            }
-        }
-
-
         // --- Профессия ---
         private ProffesionEntity? _proffesion;
         public Guid? ProffesionId { get; private set; }
@@ -88,6 +75,10 @@ namespace GameService.CORE.Entities
         public Guid UserId { get; init; } // Инициализируется один раз
         public UserEntity? User { get; set; }
 
+        // --- Тима ---
+        public Guid? TeamId { get; set; } // Инициализируется один раз
+        public TeamEntity? Team { get; set; }
+
         private UserCharacterEntity()
         { 
 
@@ -100,15 +91,6 @@ namespace GameService.CORE.Entities
                 Character = baseCharacter,
                 UserId = userId
             };
-        }
-
-        public void EquipClothing(InventoryClothingEntity clothing)
-        {
-            if (clothing != null && !Clothings.Contains(clothing))
-            {
-                Clothings.Add(clothing);
-                UpdateStats();
-            }
         }
 
         private void UpdateStats()
@@ -130,10 +112,18 @@ namespace GameService.CORE.Entities
         {
             if (Character == null) 
                 return;
+        }
 
-            Health = Character.BaseHealth;
-            Attack = Character.BaseAttack;
-            Defense = Character.BaseDefense;
+        public void JoinTeam(TeamEntity team)
+        {
+            Team = team;
+            TeamId = team.Id;
+        }
+
+        public void LeaveTeam()
+        {
+            Team = null;
+            TeamId = null;
         }
 
     }

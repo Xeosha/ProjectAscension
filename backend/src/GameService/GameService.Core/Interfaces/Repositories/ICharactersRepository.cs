@@ -6,7 +6,7 @@ using GameService.CORE.Interfaces.Abstractions;
 
 namespace GameService.CORE.Interfaces.Repositories
 {
-    public interface ICharactersRepository : IRepositoryCRUD<CharacterEntity>
+    public interface ICharactersRepository : IRepositoryBase<CharacterEntity>
     {
         Task<Result<CharacterEntity, Error>> UpdateMainInfo(Guid id, string name, string biography, uint age);
     }

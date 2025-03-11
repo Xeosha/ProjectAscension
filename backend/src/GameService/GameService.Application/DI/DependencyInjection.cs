@@ -7,6 +7,7 @@ using GameService.Application.Commands.Characters.UpdateMainInfo;
 using GameService.Application.Commands.Proffesions.Delete;
 using GameService.Application.Commands.Proffesions.Create;
 using GameService.Application.Commands.Proffesions.Update;
+using GameService.Application.Commands.Team.Create;
 
 namespace GameService.Application.DI
 {
@@ -36,6 +37,8 @@ namespace GameService.Application.DI
             services.AddScoped<IValidator<DeleteProffesionCommand>, DeleteProffesionCommandValidator>();
             services.AddScoped<IValidator<UpdateProffesionCommand>, UpdateProffesionCommandValidator>();
 
+
+            services.AddScoped<IValidator<CreateTeamCommand>, CreateTeamCommandValidator>();
 
 
             return services;

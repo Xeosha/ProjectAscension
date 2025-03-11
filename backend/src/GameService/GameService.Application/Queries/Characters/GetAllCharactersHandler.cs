@@ -1,25 +1,27 @@
-﻿
-using GameService.CORE.Entities;
+﻿using GameService.CORE.DTO;
+using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
-using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameService.Application.Queries.Characters
 {
-    public class GetAllCharactersHandler : IQueryHandler<List<CharacterEntity>, GetAllCharactersQuery>
+    public class GetAllCharactersHandler : IQueryHandler<List<CharacterDto>, GetAllCharactersQuery>
     {
-        public ICharactersRepository _charactersRepository;
+        public IReadDbContext _readDbContext;
         public ILogger<GetAllCharactersHandler> _logger;
-        public GetAllCharactersHandler(ICharactersRepository charactersRepository, ILogger<GetAllCharactersHandler> logger)
+        public GetAllCharactersHandler(
+            IReadDbContext readDbContext, 
+            ILogger<GetAllCharactersHandler> logger)
         {
-            _charactersRepository = charactersRepository;
+            _readDbContext = readDbContext;
             _logger = logger;
         }
-        public async Task<List<CharacterEntity>> Handle(
+        public async Task<List<CharacterDto>> Handle(
             GetAllCharactersQuery query,
             CancellationToken cancellationToken)
         {
-            var entities = await _charactersRepository.GetAll();
+            var entities = await _readDbContext.Characters.ToListAsync();
 
             _logger.LogInformation("Get all characters");
 

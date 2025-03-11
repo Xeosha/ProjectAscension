@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using GameService.CORE.Common;
+using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
@@ -12,15 +13,18 @@ namespace GameService.Application.Commands.Characters.UpdateMainInfo
         private readonly ICharactersRepository _charactersRepository;
         private readonly IValidator<UpdateCharacterMainInfoCommand> _validator;
         private readonly ILogger<UpdateCharacterMainInfoHandler> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UpdateCharacterMainInfoHandler(
             ICharactersRepository charactersRepository,
             IValidator<UpdateCharacterMainInfoCommand> validator,
-            ILogger<UpdateCharacterMainInfoHandler> logger)
+            ILogger<UpdateCharacterMainInfoHandler> logger,
+            IUnitOfWork unitOfWork)
         {
             _charactersRepository = charactersRepository;
             _validator = validator;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid, ErrorList>> Handle(UpdateCharacterMainInfoCommand command, CancellationToken cancellationToken = default)
@@ -39,6 +43,8 @@ namespace GameService.Application.Commands.Characters.UpdateMainInfo
 
             if (!result.IsSuccess)
                 return result.Error.ToErrorList();
+
+            await _unitOfWork.SaveChanges();
 
             var entity = result.Value;
 

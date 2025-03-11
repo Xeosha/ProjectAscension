@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using GameService.CORE.Common;
+using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
@@ -12,15 +13,18 @@ namespace GameService.Application.Commands.Proffesions.Delete
         private readonly IProffesionsRepository _proffesionsRepository;
         private readonly IValidator<DeleteProffesionCommand> _validator;
         private readonly ILogger<DeleteProffesionHandler> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
         public DeleteProffesionHandler(
             IProffesionsRepository proffesionsRepository, 
             IValidator<DeleteProffesionCommand> validator, 
-            ILogger<DeleteProffesionHandler> logger)
+            ILogger<DeleteProffesionHandler> logger,
+            IUnitOfWork unitOfWork)
         {
             _proffesionsRepository = proffesionsRepository;
             _validator = validator;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid, ErrorList>> Handle(
@@ -39,8 +43,9 @@ namespace GameService.Application.Commands.Proffesions.Delete
             if (result.IsFailure)
                 return result.Error.ToErrorList();
 
-            var proffesion = result.Value;
+            await _unitOfWork.SaveChanges();
 
+            var proffesion = result.Value;
 
             _logger.LogInformation("Updated deleted with id {character.Id}", proffesion.Id);
 
