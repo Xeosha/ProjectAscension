@@ -20,11 +20,32 @@ namespace GameService.Application.Queries.Users
             GetUsersQuery query,
             CancellationToken cancellationToken = default)
         {
-            var entities = await _readDbContext.Users.ToListAsync();
+            var entities = await _readDbContext.Users
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    UserName = u.UserName,
+                    Email = u.Email,
+                    Characters = u.Characters
+                        .Select(c => new CharactersInTeam
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList(),
+                    Teams = u.Teams
+                        .Select(c => new TeamInUserDto
+                        {
+                            Id = c.Id,
+                            Name = c.Name
+                        }).ToList()
+                })
+                .AsNoTracking()
+                .ToListAsync();
 
             _logger.LogInformation("Get all users");
 
-            return entities.ToList();
+            return entities; 
         }
     }
 }

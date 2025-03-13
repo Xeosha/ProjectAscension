@@ -8,6 +8,14 @@ using GameService.Application.Commands.Proffesions.Delete;
 using GameService.Application.Commands.Proffesions.Create;
 using GameService.Application.Commands.Proffesions.Update;
 using GameService.Application.Commands.Team.Create;
+using GameService.Application.Commands.Team.Delete;
+using GameService.Application.Commands.Team.Update;
+using GameService.Application.Commands.User.Create;
+using GameService.Application.Commands.User.Delete;
+using GameService.Application.Commands.User.Update;
+using GameService.Application.Commands.UserCharacter.Create;
+using GameService.Application.Commands.UserCharacter.Delete;
+using GameService.Application.Commands.UserCharacter.Update;
 
 namespace GameService.Application.DI
 {
@@ -37,8 +45,17 @@ namespace GameService.Application.DI
             services.AddScoped<IValidator<DeleteProffesionCommand>, DeleteProffesionCommandValidator>();
             services.AddScoped<IValidator<UpdateProffesionCommand>, UpdateProffesionCommandValidator>();
 
-
             services.AddScoped<IValidator<CreateTeamCommand>, CreateTeamCommandValidator>();
+            services.AddScoped<IValidator<UpdateTeamCommand>, UpdateTeamCommandValidator>();
+            services.AddScoped<IValidator<DeleteTeamCommand>, DeleteTeamCommandValidator>();
+
+            services.AddScoped<IValidator<CreateUserCommand>, CreateUserCommandValidator>();
+            services.AddScoped<IValidator<DeleteUserCommand>, DeleteUserCommandValidator>();
+            services.AddScoped<IValidator<UpdateUserMainInfoCommand>, UpdateUserMainInfoCommandValidator>();
+
+            services.AddScoped<IValidator<CreateUserCharacterCommand>, CreateUserCharacterCommandValidator>();
+            services.AddScoped<IValidator<DeleteUserCharacterCommand>, DeleteUserCharacterCommandValidator>();
+            services.AddScoped<IValidator<UpdateUserCharacterCommand>, UpdateUserCharacterCommandValidator>();
 
 
             return services;

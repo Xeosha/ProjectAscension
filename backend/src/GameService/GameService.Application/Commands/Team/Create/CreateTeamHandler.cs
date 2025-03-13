@@ -50,6 +50,7 @@ namespace GameService.Application.Commands.Team.Create
             foreach (var characterId in command.CharacterIds)
             {
                 var characterResult = await _userCharactersRepository.GetById(characterId);
+
                 if (!characterResult.IsSuccess)
                     return characterResult.Error.ToErrorList();
 

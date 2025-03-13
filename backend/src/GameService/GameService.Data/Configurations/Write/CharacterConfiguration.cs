@@ -9,6 +9,12 @@ namespace GameService.Data.Configurations.Write
         public void Configure(EntityTypeBuilder<CharacterEntity> builder)
         {
             builder.ToTable("Characters");
+
+            builder.HasMany(i => i.UserCharacters)
+                .WithOne()
+                .HasForeignKey(i => i.CharacterId);
+
+
         }
     }
 }

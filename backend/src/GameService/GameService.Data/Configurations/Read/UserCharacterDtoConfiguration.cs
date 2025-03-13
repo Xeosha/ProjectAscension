@@ -8,8 +8,8 @@ namespace GameService.Data.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<UserCharacterDto> builder)
         {
-            builder.ToTable("UsersCharacters"); // Используйте реальное имя таблицы
-            builder.HasKey(u => u.Id);
+            builder.ToView("UserCharacters");
+            builder.HasKey();
         }
     }
 }

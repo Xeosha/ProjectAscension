@@ -36,7 +36,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// dotnet ef migrations add Init -s src/GameService/GameService.API/ -p src/GameService/GameService.Data
+// dotnet ef migrations add Init -s src/GameService/GameService.API/ -p src/GameService/GameService.Data --context WriteDbContext
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<WriteDbContext>();

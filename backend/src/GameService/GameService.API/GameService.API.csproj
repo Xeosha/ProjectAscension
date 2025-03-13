@@ -22,8 +22,4 @@
     <ProjectReference Include="..\GameService.Data\GameService.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\UserCharacter\" />
-  </ItemGroup>
-
 </Project>

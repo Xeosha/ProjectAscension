@@ -1,7 +1,7 @@
-﻿using GameService.CORE.DTO;
+﻿
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+using GameService.CORE.DTO;
 
 
 namespace GameService.Data.Configurations.Read
@@ -10,8 +10,6 @@ namespace GameService.Data.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<UserDto> builder)
         {
-            builder.ToTable("Users"); // Используйте реальное имя таблицы
-            builder.HasKey(u => u.Id);
         }
     }
 }

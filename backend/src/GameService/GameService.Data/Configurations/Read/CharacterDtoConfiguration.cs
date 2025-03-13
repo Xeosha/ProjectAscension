@@ -9,8 +9,7 @@ namespace GameService.Data.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<CharacterDto> builder)
         {
-            builder.ToTable("Characters");
-            builder.HasKey(c => c.Id);
+
         }
     }
 }

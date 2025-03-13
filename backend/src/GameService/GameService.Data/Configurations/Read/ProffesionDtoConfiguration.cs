@@ -1,6 +1,7 @@
-﻿using GameService.CORE.DTO;
+﻿    using GameService.CORE.DTO;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using GameService.CORE.Entities;
 
 namespace GameService.Data.Configurations.Read
 {
@@ -8,8 +9,6 @@ namespace GameService.Data.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<ProffesionDto> builder)
         {
-            builder.ToTable("Proffesions");
-            builder.HasKey(u => u.Id);
         }
     }
 }

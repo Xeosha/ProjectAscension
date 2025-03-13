@@ -1,10 +1,8 @@
 ﻿
 
 using GameService.CORE.DTO;
-using GameService.CORE.Entities;
 using GameService.CORE.Interfaces;
 using GameService.CORE.Interfaces.Abstractions;
-using GameService.CORE.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -26,11 +24,13 @@ namespace GameService.Application.Queries.Proffesions
             CancellationToken cancellationToken)
         {
 
-            var entities = await _readDbContext.Proffesions.ToListAsync();
+            var entities = await _readDbContext.Proffesions
+                .Select(u => new ProffesionDto(u.Id, u.Name))
+                .ToListAsync();
 
             _logger.LogInformation("Get all proffesions");
 
-            return entities.ToList();
+            return entities;
         }
     }
 }

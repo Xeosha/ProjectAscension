@@ -10,7 +10,7 @@ namespace GameService.CORE.Interfaces.Abstractions
     {
         Task<Result<T, Error>> GetById(Guid id);
         Task<Result> Add(T entity);
-        Task<Result<T, Error>> Update(Guid id, T entity);
+        Task<Result<T, Error>> Update(T entity);
         Task<Result<T, Error>> Delete(Guid id);
     }
 }

@@ -4,11 +4,11 @@ namespace GameService.CORE.Entities
 {
     public class UserCharacterEntity : BaseEntity
     {     
-        public uint Attack;
-        public uint Defense;
-        public uint Health;
+        public uint Attack { get; set; }
+        public uint Defense { get; set; }
+        public uint Health { get; set; }
 
-        public uint Level = 1;
+        public uint Level {  get; set; }
         
         private uint _exp;
         public uint Exp
@@ -72,7 +72,7 @@ namespace GameService.CORE.Entities
         }
 
         // --- Игрок ---
-        public Guid UserId { get; init; } // Инициализируется один раз
+        public Guid UserId { get; set; } // Инициализируется один раз
         public UserEntity? User { get; set; }
 
         // --- Тима ---
@@ -84,7 +84,7 @@ namespace GameService.CORE.Entities
 
         }
 
-        public static UserCharacterEntity Create(CharacterEntity baseCharacter, Guid userId)
+        public static UserCharacterEntity Create(Guid userId, CharacterEntity baseCharacter)
         {
             return new UserCharacterEntity
             {
@@ -119,6 +119,25 @@ namespace GameService.CORE.Entities
             Team = team;
             TeamId = team.Id;
         }
+
+        public void UpdateProffesion(ProffesionEntity proffesion)
+        {
+            Proffesion = proffesion;
+            ProffesionId = proffesion.Id;
+        }
+
+        public void UpdateTeam(TeamEntity team)
+        {
+            Team = team;
+            TeamId = team.Id;
+        }
+
+        public void UpdateUser(UserEntity user)
+        {
+            User = user;
+            UserId = user.Id;
+        }
+
 
         public void LeaveTeam()
         {

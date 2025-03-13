@@ -21,11 +21,14 @@ namespace GameService.Application.Queries.Characters
             GetAllCharactersQuery query,
             CancellationToken cancellationToken)
         {
-            var entities = await _readDbContext.Characters.ToListAsync();
+
+            var entities = await _readDbContext.Characters
+                .Select(u => new CharacterDto(u.Id, u.Name, u.Biography, u.Age, u.Rarity, u.MinLevel, u.MaxLevel))
+                .ToListAsync();
 
             _logger.LogInformation("Get all characters");
 
-            return entities.ToList();
+            return entities;
         }
     }
 }

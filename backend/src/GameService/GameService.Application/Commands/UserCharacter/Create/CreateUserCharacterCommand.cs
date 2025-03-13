@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+
+using GameService.CORE.Interfaces.Abstractions;
 
 namespace GameService.Application.Commands.UserCharacter.Create
 {
-    internal class CreateUserCharacterCommand
-    {
-    }
+    public record CreateUserCharacterCommand
+    (
+        Guid UserId,
+        Guid CharacterId,
+        uint Attack,
+        uint Defense,
+        uint Health
+    ) : ICommand;
 }

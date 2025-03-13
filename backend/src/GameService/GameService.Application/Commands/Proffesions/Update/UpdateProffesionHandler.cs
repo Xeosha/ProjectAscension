@@ -47,7 +47,9 @@ namespace GameService.Application.Commands.Proffesions.Update
 
             _logger.LogInformation("Find proffesion {name} with id {id}", command.Name, command.ProffesionId);
 
-            var result = await _proffesionsRepository.Update(command.ProffesionId, updateEntity.Value);
+            updateEntity.Value.Id = command.ProffesionId;
+
+            var result = await _proffesionsRepository.Update(updateEntity.Value);
 
             if (!result.IsSuccess)
                 return result.Error.ToErrorList();

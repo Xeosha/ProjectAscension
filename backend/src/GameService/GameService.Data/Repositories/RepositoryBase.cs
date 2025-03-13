@@ -55,15 +55,14 @@ namespace GameService.Data.Repositories
             return entity;
         }
 
-        public async virtual Task<Result<T, Error>> Update(Guid id, T entity)
+        public async virtual Task<Result<T, Error>> Update(T entity)
         {
-            var existing = await _dbSet.FindAsync(id);
+            var existing = await _dbSet.FindAsync(entity.Id);
             if (existing == null)
             {
-                return Errors.General.NotFound(id);
+                return Errors.General.NotFound(entity.Id);
             }
 
-            entity.Id = existing.Id;
             _context.Entry(existing).CurrentValues.SetValues(entity);
                 
             return existing;

@@ -5,10 +5,13 @@ namespace GameService.CORE.DTO
     {
         public Guid Id { get; init; }
         public string Name { get; init; } = default!;
+        public uint Power { get; init; } 
 
-        public Guid UserId { get; init; }
-
-        // Список участников, которыми владеет эта команда
-        public List<UserCharacterDto> Members { get; init; } = new();
-    };
+        public UserInTeam User { get; init; } = default!;
+        public List<CharactersInTeam> Members { get; init; } = new();
+    }
+    public record UserInTeam(
+        Guid UserId,
+        string UserName
+    );
 }

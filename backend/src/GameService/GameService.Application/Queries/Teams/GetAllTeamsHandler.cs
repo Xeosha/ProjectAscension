@@ -19,11 +19,29 @@ namespace GameService.Application.Queries.Teams
             GetAllTeamsQuery query,
             CancellationToken cancellationToken)
         {
-            var entities = await _readDbContext.Teams.ToListAsync();
+            var teams = await _readDbContext.Teams
+                .Include(t => t.User) // Включаем владельца команды
+                .Include(t => t.Characters) // Включаем персонажей команды
+                    .ThenInclude(uc => uc.Character) // Детали базового персонажа
+                .Select(t => new TeamDto
+                {
+                    Id = t.Id,
+                    User = new UserInTeam(t.User.Id, t.User.UserName),
+                    Name = t.Name,
+                    Power = t.Power,
+                    Members = t.Characters.Select(uc => new CharactersInTeam
+                    {
+                        Id = uc.Id,
+                        Name = uc.Character.Name,
+                    }).ToList()
+                })
+                .AsNoTracking() // Отключаем отслеживание изменений
+                .ToListAsync(cancellationToken);
+
 
             _logger.LogInformation("Get all teams");
 
-            return entities.ToList();
+            return teams;
         }
     }
 }

@@ -1,15 +1,17 @@
-﻿
-
-using GameService.CORE.DTO;
+﻿using GameService.CORE.Entities;
 
 namespace GameService.CORE.Interfaces
 {
     public interface IReadDbContext
     {
-        public IQueryable<CharacterDto> Characters { get; }
-        public IQueryable<TeamDto> Teams { get; }
-        public IQueryable<UserCharacterDto> UserCharacters { get; }
-        public IQueryable<UserDto> Users { get; }
-        public IQueryable<ProffesionDto> Proffesions { get; }
+        public IQueryable<CharacterEntity> Characters { get; }
+
+        public IQueryable<TeamEntity> Teams { get; }
+
+        public IQueryable<UserEntity> Users { get; }
+
+        public IQueryable<UserCharacterEntity> UserCharacters { get; }
+
+        public IQueryable<ProffesionEntity> Proffesions { get; }
     }
 }

@@ -221,7 +221,7 @@ namespace GameService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("GameService.CORE.Entities.InventoryClothingEntity", b =>
