@@ -27,11 +27,11 @@ namespace GameService.Application.Queries.Users
                     Name = u.Name,
                     UserName = u.UserName,
                     Email = u.Email,
-                    Characters = u.Characters
+                    Characters = u.UserCharacters
                         .Select(c => new CharactersInTeam
                         {
                             Id = c.Id,
-                            Name = c.Name
+                            Name = c.Character.Name
                         }).ToList(),
                     Teams = u.Teams
                         .Select(c => new TeamInUserDto

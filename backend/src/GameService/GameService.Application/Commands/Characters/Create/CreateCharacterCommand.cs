@@ -10,9 +10,6 @@ namespace GameService.Application.Commands.Characters.Create
         CharacterRarity rarity,
         uint age,
         uint minLevel,
-        uint maxLevel,
-        uint baseAttack,
-        uint baseDefense,
-        uint baseHealth
+        uint maxLevel
     ) : ICommand;
 }

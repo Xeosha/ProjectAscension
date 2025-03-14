@@ -7,12 +7,10 @@ namespace GameService.API.Contracts.UserCharacter
        uint Attack,
        uint Defense,
        uint Health,
-       Guid UserId,
-       Guid ProffesionId,
-       Guid TeamId
+       Guid ProffesionId
     )
     {
         public UpdateUserCharacterCommand ToCommand(Guid id)
-            => new(id, Attack, Defense, Health, UserId, ProffesionId, TeamId);
+            => new(id, ProffesionId, Attack, Defense, Health);
     }
 }

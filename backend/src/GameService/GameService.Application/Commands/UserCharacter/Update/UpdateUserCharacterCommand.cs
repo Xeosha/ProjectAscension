@@ -4,11 +4,9 @@ namespace GameService.Application.Commands.UserCharacter.Update
 {
     public record UpdateUserCharacterCommand(
        Guid Id,
+       Guid ProffesionId,
        uint Attack,
        uint Defense,
-       uint Health,
-       Guid UserId,
-       Guid ProffesionId,
-       Guid TeamId
+       uint Health
     ) : ICommand;
 }

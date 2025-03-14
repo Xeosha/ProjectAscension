@@ -273,11 +273,12 @@ namespace GameService.Data.Migrations
                     b.HasOne("GameService.CORE.Entities.ProffesionEntity", "Proffesion")
                         .WithMany("UserCharacters")
                         .HasForeignKey("ProffesionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GameService.CORE.Entities.TeamEntity", "Team")
                         .WithMany("Characters")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GameService.CORE.Entities.UserEntity", "User")
                         .WithMany("UserCharacters")

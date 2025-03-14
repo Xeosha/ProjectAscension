@@ -16,6 +16,7 @@ using GameService.Application.Commands.User.Update;
 using GameService.Application.Commands.UserCharacter.Create;
 using GameService.Application.Commands.UserCharacter.Delete;
 using GameService.Application.Commands.UserCharacter.Update;
+using GameService.Application.Commands.UserCharacter.SwitchUser;
 
 namespace GameService.Application.DI
 {
@@ -56,6 +57,7 @@ namespace GameService.Application.DI
             services.AddScoped<IValidator<CreateUserCharacterCommand>, CreateUserCharacterCommandValidator>();
             services.AddScoped<IValidator<DeleteUserCharacterCommand>, DeleteUserCharacterCommandValidator>();
             services.AddScoped<IValidator<UpdateUserCharacterCommand>, UpdateUserCharacterCommandValidator>();
+            services.AddScoped<IValidator<SwitchUserCommand>, SwitchUserCommandValidator>();
 
 
             return services;

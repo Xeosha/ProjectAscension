@@ -46,6 +46,7 @@ namespace GameService.CORE.Entities
 
             character.JoinTeam(this);
             Characters.Add(character);
+
             return Result.Success();
         }
 
@@ -55,8 +56,9 @@ namespace GameService.CORE.Entities
             if (!Characters.Contains(character))
                 return Result.Failure("Персонаж не найден в команде");
 
-            character.LeaveTeam();
             Characters.Remove(character);
+            character.LeaveTeam();
+
             return Result.Success();
         }
 

@@ -42,8 +42,8 @@ const HeroScreen = () => {
 
   const [activeHero, setActiveHero] = useState(0);
 
-  const user = useTelegramUserUnsafe();
-  console.log(user.userName);
+  //const user = useTelegramUserUnsafe();
+  //console.log(user.userName);
 
   useEffect(() => {
     const newMargin = wp(32) > 400 ? wp(32) : 15;
@@ -141,7 +141,7 @@ const HeroScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
       >
-        <Text style={styles.title}>{user.userName}</Text>
+        <Text style={styles.title}>{}</Text>
         <Text style={styles.title}>Xeosha</Text>
         <JobCard hero={currentHero} />
         <HeroCarousel heroes={heroes} viewSize={viewSize} activeHero={activeHero} setActiveHero={setActiveHero}/>   

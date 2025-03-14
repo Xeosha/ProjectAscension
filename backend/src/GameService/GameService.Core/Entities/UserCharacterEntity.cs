@@ -43,64 +43,53 @@ namespace GameService.CORE.Entities
             // Увеличиваем характеристики при повышении уровня
         }
 
-        // --- Профессия ---
-        private ProffesionEntity? _proffesion;
-        public Guid? ProffesionId { get; private set; }
-        public ProffesionEntity? Proffesion
-        {
-            get => _proffesion;
-            set
-            {
-                _proffesion = value;
-                ProffesionId = value?.Id;
-                UpdateStats(); // Обновляем крит при смене профессии
-            }
-        }
+        public Guid? ProffesionId { get; set; }
+        public ProffesionEntity? Proffesion { get; set; }
 
 
-        // --- Базовый персонаж ---
-        private CharacterEntity? _character;
-        public Guid CharacterId { get; init; } // Инициализируется один раз
-        public CharacterEntity? Character
-        {
-            get => _character;
-            init
-            {
-                _character = value;
-                InitializeFromCharacter(); // Инициализация при создании
-            }
-        }
+        public Guid CharacterId { get; set; }
+        public CharacterEntity Character { get; set; }
+       
 
         // --- Игрок ---
-        public Guid UserId { get; set; } // Инициализируется один раз
+        public Guid UserId { get; set; } 
         public UserEntity? User { get; set; }
 
         // --- Тима ---
-        public Guid? TeamId { get; set; } // Инициализируется один раз
+        public Guid? TeamId { get; set; } 
         public TeamEntity? Team { get; set; }
 
-        private UserCharacterEntity()
-        { 
 
+        private UserCharacterEntity(Guid userId, Guid characterId)
+        {
+            UserId = userId;
+            CharacterId = characterId;
         }
 
-        public static UserCharacterEntity Create(Guid userId, CharacterEntity baseCharacter)
+        private UserCharacterEntity(UserEntity user, CharacterEntity baseCharacter, uint attack, uint defense, uint health)
         {
-            return new UserCharacterEntity
-            {
-                Character = baseCharacter,
-                UserId = userId
-            };
+            Character = baseCharacter;
+            User = user;
+            UserId = user.Id;
+            CharacterId = Character.Id;
+            Attack = attack;
+            Defense = defense;
+            Health = Health;
         }
 
-        private void UpdateStats()
+        public static UserCharacterEntity Create(UserEntity user, CharacterEntity baseCharacter, uint attack, uint defense, uint health)
+            => new UserCharacterEntity(user, baseCharacter, attack, defense, health);
+
+        public void UpdateStats(uint attack, uint defense, uint health)
         {
-            
+            Attack = attack;
+            Defense = defense;
+            Health = health;
         }
 
         private uint CalculatePower()
         {
-            return Level * 10 + Attack + Defense;
+            return Level * 10 + Attack + Defense + Health;
         }
 
         private uint CalculateExpPerLevel()
@@ -108,17 +97,7 @@ namespace GameService.CORE.Entities
             return Level * 10;
         }
 
-        private void InitializeFromCharacter()
-        {
-            if (Character == null) 
-                return;
-        }
-
-        public void JoinTeam(TeamEntity team)
-        {
-            Team = team;
-            TeamId = team.Id;
-        }
+        
 
         public void UpdateProffesion(ProffesionEntity proffesion)
         {
@@ -126,23 +105,32 @@ namespace GameService.CORE.Entities
             ProffesionId = proffesion.Id;
         }
 
-        public void UpdateTeam(TeamEntity team)
+        public void SwitchUser(UserEntity user)
+        {
+            LeaveTeam();
+
+            User = user;
+            UserId = user.Id;  
+        }
+
+        public void JoinTeam(TeamEntity team)
         {
             Team = team;
             TeamId = team.Id;
-        }
 
-        public void UpdateUser(UserEntity user)
-        {
-            User = user;
-            UserId = user.Id;
+            team.Characters.Add(this);
         }
-
 
         public void LeaveTeam()
         {
+            if (Team == null) 
+                return;
+
+            var currentTeam = Team;
             Team = null;
             TeamId = null;
+            currentTeam.RemoveCharacter(this);
+
         }
 
     }

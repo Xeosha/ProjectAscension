@@ -10,14 +10,11 @@ namespace GameService.API.Contracts.Character
         CharacterRarity rarity,
         uint age,
         uint minLevel,
-        uint maxLevel,
-        uint baseAttack,
-        uint baseDefense,
-        uint baseHealth
+        uint maxLevel
     )
     {
         public CreateCharacterCommand ToCommand() =>
-            new(name, biography, rarity, age, minLevel, maxLevel, baseAttack, baseDefense, baseHealth);
+            new(name, biography, rarity, age, minLevel, maxLevel);
     }
 
 

@@ -6,6 +6,7 @@ using GameService.CORE.Interfaces.Abstractions;
 using GameService.CORE.Interfaces.Repositories;
 using GameService.CORE.Interfaces;
 using Microsoft.Extensions.Logging;
+using GameService.CORE.DTO;
 
 namespace GameService.Application.Commands.User.Create
 {

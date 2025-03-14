@@ -19,7 +19,7 @@ namespace GameService.Application.Commands.Characters.Create
         public CreateCharacterHandler(
             ICharactersRepository charactersRepository,
             IValidator<CreateCharacterCommand> validator,
-            ILogger<CreateCharacterHandler> logger,
+            ILogger<CreateCharacterHandler> logger, 
             IUnitOfWork unitOfWork)
         {
             _charactersRepository = charactersRepository;
@@ -32,9 +32,8 @@ namespace GameService.Application.Commands.Characters.Create
         {
 
             var result = CharacterEntity.Create(
-                command.name, command.biography, command.rarity, 
-                command.age, command.minLevel, command.maxLevel, 
-                command.baseAttack, command.baseHealth, command.baseDefense);
+                command.name, command.biography, command.rarity,
+                command.age, command.minLevel, command.maxLevel);
 
             if (!result.IsSuccess)
                 return Errors.General.AlreadyExist().ToErrorList();

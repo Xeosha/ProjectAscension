@@ -10,6 +10,9 @@ namespace GameService.CORE.DTO
         public CharacterInUserCharacter Character { get; init; }
         public ProffesionInUserCharacter? Proffesion { get; init; }
         public TeamInUserCharacter? Team{ get; init; }
+        public uint Attack { get; init; }
+        public uint Health { get; init; }
+        public uint Defense { get; init; }
     }
 
     public record UserInUserCharacter(

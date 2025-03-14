@@ -30,8 +30,15 @@ namespace GameService.Application.Queries.UserCharacter
                     Id = t.Id,
                     User = new UserInUserCharacter(t.User.Id, t.User.UserName),
                     Character = new CharacterInUserCharacter(t.Character.Id, t.Character.Name),
-                    Proffesion = new ProffesionInUserCharacter(t.Proffesion.Id, t.Proffesion.Name),
-                    Team = new TeamInUserCharacter(t.Team.Id, t.Team.Name)
+                    Proffesion = t.Proffesion != null
+                        ? new ProffesionInUserCharacter(t.Proffesion.Id, t.Proffesion.Name)
+                        : null,
+                    Team = t.Team != null
+                        ? new TeamInUserCharacter(t.Team.Id, t.Team.Name)
+                        : null,
+                    Attack = t.Attack,
+                    Defense = t.Defense,
+                    Health = t.Health
                 });
 
             var result = await queryable.ToPagedList(query.Page, query.PageSize, cancellationToken);

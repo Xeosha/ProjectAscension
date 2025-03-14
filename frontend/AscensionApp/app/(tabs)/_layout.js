@@ -6,7 +6,7 @@ const TabArr = [
   { route: 'map', label: 'Карта', icon: 'map' },
   { route: 'tower', label: 'Башня', icon: 'castle' },
   { route: 'shop', label: 'Магазин', icon: 'store' },
-  { route: 'guild', label: 'Гильдия', icon: 'shield-crown' },
+  { route: 'guild', label: 'Гильдия', icon: 'shield-crown' }
 ];
 
 export default function Layout() {

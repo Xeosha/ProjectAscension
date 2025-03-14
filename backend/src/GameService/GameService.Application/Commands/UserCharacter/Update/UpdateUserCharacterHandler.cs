@@ -11,26 +11,20 @@ namespace GameService.Application.Commands.UserCharacter.Update
     public class UpdateUserCharacterHandler : ICommandHandler<Guid, UpdateUserCharacterCommand>
     {
         private readonly IUserCharactersRepository _repository;
-        private readonly IUsersRepository _usersRepository;
         private readonly IProffesionsRepository _proffesionsRepository;
-        private readonly ITeamsRepository _teamsRepository;
         private readonly IValidator<UpdateUserCharacterCommand> _validator;
         private readonly ILogger<UpdateUserCharacterHandler> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
         public UpdateUserCharacterHandler(
             IUserCharactersRepository repository,
-            IUsersRepository usersRepository,
             IProffesionsRepository proffesionsRepository,
-            ITeamsRepository teamsRepository,
             IValidator<UpdateUserCharacterCommand> validator,
             ILogger<UpdateUserCharacterHandler> logger,
             IUnitOfWork unitOfWork)
         {
             _repository = repository;
-            _usersRepository = usersRepository;
             _proffesionsRepository = proffesionsRepository;
-            _teamsRepository = teamsRepository;
             _validator = validator;
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -46,11 +40,9 @@ namespace GameService.Application.Commands.UserCharacter.Update
             }
 
             var proffesionResult = await _proffesionsRepository.GetById(command.ProffesionId);
-            var userResult = await _usersRepository.GetById(command.UserId);
-            var teamResult = await _teamsRepository.GetById(command.UserId);
 
 
-            if (!proffesionResult.IsSuccess || !userResult.IsSuccess || !teamResult.IsSuccess)
+            if (!proffesionResult.IsSuccess)
                 return proffesionResult.Error.ToErrorList();
 
             var entityResult = await _repository.GetById(command.Id);
@@ -60,10 +52,8 @@ namespace GameService.Application.Commands.UserCharacter.Update
 
             var entity = entityResult.Value;
 
-            entity.UpdateTeam(teamResult.Value);
             entity.UpdateProffesion(proffesionResult.Value);
-            entity.UpdateUser(userResult.Value);
-
+            entity.UpdateStats(command.Attack, command.Defense, command.Health);
 
             await _unitOfWork.SaveChanges();
 

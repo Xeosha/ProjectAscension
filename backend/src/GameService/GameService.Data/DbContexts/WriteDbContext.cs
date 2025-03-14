@@ -54,11 +54,13 @@ namespace GameService.Data.DbContexts
                    j => j
                     .HasOne(pt => pt.Character)
                     .WithMany(t => t.UserCharacters)
-                    .HasForeignKey(pt => pt.CharacterId),
+                    .HasForeignKey(pt => pt.CharacterId)
+                    .OnDelete(DeleteBehavior.Cascade),
                    j => j
                     .HasOne(pt => pt.User)
                     .WithMany(p => p.UserCharacters)
-                    .HasForeignKey(pt => pt.UserId),
+                    .HasForeignKey(pt => pt.UserId)
+                    .OnDelete(DeleteBehavior.Cascade),
                    j =>
                    {
                        j.Property(pt => pt.Health);
@@ -75,7 +77,15 @@ namespace GameService.Data.DbContexts
                 .HasOne(uc => uc.Proffesion)          // UserCharacter имеет одну Profession
                 .WithMany(p => p.UserCharacters)      // Profession имеет много UserCharacters
                 .HasForeignKey(uc => uc.ProffesionId) // Внешний ключ
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserCharacterEntity>()
+                .HasOne(uc => uc.Team)          // UserCharacter имеет одну Profession
+                .WithMany(p => p.Characters)      // Profession имеет много UserCharacters
+                .HasForeignKey(uc => uc.TeamId) // Внешний ключ
+                .OnDelete(DeleteBehavior.Cascade);
+
+
 
             base.OnModelCreating(modelBuilder);
         }

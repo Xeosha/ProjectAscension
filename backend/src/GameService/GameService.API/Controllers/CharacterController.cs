@@ -39,7 +39,7 @@ namespace GameService.API.Controllers
         }
 
 
-        [HttpPut("{id:guid}/main-info")]
+        [HttpPut("main-info/{id:guid}")]
         public async Task<ActionResult> UpdateMainInfo(
          [FromRoute] Guid id,
          [FromServices] UpdateCharacterMainInfoHandler handler,

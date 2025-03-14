@@ -2,6 +2,7 @@
 using GameService.API.Extensions;
 using GameService.Application.Commands.UserCharacter.Create;
 using GameService.Application.Commands.UserCharacter.Delete;
+using GameService.Application.Commands.UserCharacter.SwitchUser;
 using GameService.Application.Commands.UserCharacter.Update;
 using GameService.Application.Queries.UserCharacter;
 using Microsoft.AspNetCore.Mvc;
@@ -57,11 +58,28 @@ namespace GameService.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpPut("{id:guid}")]
-        public async Task<ActionResult> Update(
+        [HttpPut("main-info/{id:guid}")]
+        public async Task<ActionResult> UpdateMainInfo(
         [FromRoute] Guid id,
         [FromServices] UpdateUserCharacterHandler handler,
         [FromBody] UpdateUserCharacterRequest request,
+        CancellationToken cancellationToken)
+        {
+            var command = request.ToCommand(id);
+
+            var result = await handler.Handle(command, cancellationToken);
+
+            if (result.IsFailure)
+                return result.Error.ToResponse();
+
+            return Ok(result.Value);
+        }
+
+        [HttpPut("switch-user/{id:guid}")]
+        public async Task<ActionResult> SwitchUser(
+        [FromRoute] Guid id,
+        [FromServices] SwitchUserHandler handler,
+        [FromBody] SwitchUserInCharacterRequest request,
         CancellationToken cancellationToken)
         {
             var command = request.ToCommand(id);
