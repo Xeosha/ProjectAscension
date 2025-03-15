@@ -8,8 +8,8 @@
  - localhost:6061 - GameService
  - locahost:6060 - UserService (Identity)
  - locahost:5050 - pgAdmin 
- (подключение - любое название, далее название контейнера gameservice.db, название db - gamerservicedb, user - postgres, пароль - 123)
- (в .env файле все атрибуты для подключения)
+ * (подключение - любое название, далее название контейнера gameservice.db, название db - gamerservicedb, user - postgres, пароль - 123)
+ * (в .env файле все атрибуты для подключения)
 
 ## Что использовалось
  - EF - ORM
